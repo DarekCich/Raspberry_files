@@ -7,13 +7,16 @@ let haslo = "abcwqeewq"
 //konfiguracja
 let back1 = "#000000";
 let back2 = "#003e93";
-let font1 = "#E05E1F";
+let font1 = "#f5f6f7";
+//let font1 = "#E05E1F";
 let font2 = "#ffffff";
-let back12 = "#0a1e34";
+let back12 = "#0a0a23";
+//let back12 = "#1b1b32";
+//let back12 = "#0a1e34";
 //let back12 = "#1B1B32";
-let back22 = "#003e93";
-let font12 = "#E05E1F";
-let font22 = "#ffffff";
+//let back22 = "#003e93";
+//let font12 = "#E05E1F";
+//let font22 = "#ffffff";
 let Responses;
 let temp=0;
 let numberOfStation="";
@@ -149,7 +152,6 @@ function loadOnViewTrips(){
         else
             direction.innerHTML = listOfTrips[temp].headsign
         time.innerHTML = listOfTrips[temp].estimatedTime
-
         }
 }
 

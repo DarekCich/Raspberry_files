@@ -10,7 +10,12 @@ function createWindow () {
   mainWindow = new BrowserWindow(
     {
       width: 720,
-      height: 480
+      height: 480,
+      vibrancy: {
+        theme: 'light', // (default) or 'dark' or '#rrggbbaa'
+        effect: 'blur', // (default) or 'blur'
+        disableOnBlur: false, // (default)
+      }
   //    webPreferences: {
   //      devTools: false
   //    }

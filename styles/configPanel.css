@@ -6,13 +6,12 @@
     border-radius: 10px;
 
     z-index: -1;
-    background-color: rgba(129, 129, 129, 0.3);
-    border: solid rgba(255, 255, 255, 0.5) 2px;
-    backdrop-filter: blur(10px);
+    background-color: var(--back-color);
+    border: solid rgba(255, 255, 255, 0.2) 2px;
     position: absolute;
     font-size: 25px;
-    left: 15px;
-    top: 78px;
+    left: 16px;
+    top: 80px;
     max-width: 500px;
     max-height: 340px;
     height: 250px;
@@ -45,4 +44,21 @@ select{
     height: 20%;
     width: 90%;
     display: flex;
+}
+.NameOfOption{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+}
+.backColor{
+    background-color: rgba(255, 255, 255, 0.08);
+
+    height: 250px;
+    width: 445px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }

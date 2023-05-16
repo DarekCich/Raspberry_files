@@ -14,30 +14,31 @@
     <button id="top" class="controlButtons" onclick="moveTop()"></button>
     <button id="bottom" class="controlButtons" onclick="moveBottom()" ></button>
     <div id="configPanel">
-        <div class="configOption">
-            <button class="configButton"  onclick="changeColor()">Zmień motyw</button>
-            <span></span>
-            <div id="motyw"></div>
+        <div class="backColor">
+            <div class="configOption">
+                <button class="configButton"  onclick="changeColor()">Zmień motyw</button>
+                <span></span>
+                <div id="motyw" class="NameOfOption"></div>
+            </div>
+            <hr>
+            <div class="configOption">
+                <button class="configButton" onclick="changeTypeOfTransport()">Ustaw Rodzaj Transportu</button>
+                <span></span>
+                <div id="rodzajTransportu" class="NameOfOption"></div>
+            </div>
+            <hr>
+            <div class="configOption">
+                <button class="configButton" id="city"  onclick="setCity(id)">Ustaw Miasto</button>
+                <span></span>
+                <div id="Miasto" class="NameOfOption"></div>
+            </div>
+            <hr>
+            <div class="configOption">
+                <button class="configButton" id="station" onclick="setStation(id)">Ustaw Miejsce</button>
+                <span></span>
+                <div id="Przystanek" class="NameOfOption"></div>
+            </div >
         </div>
-        <hr>
-        <div class="configOption">
-            <button class="configButton" onclick="changeTypeOfTransport()">Ustaw Rodzaj Transportu</button>
-            <span></span>
-            <div id="rodzajTransportu"></div>
-        </div>
-        <hr>
-        <div class="configOption">
-            <button class="configButton" id="city" onclick="setCity(id)">Ustaw Miasto</button>
-            <span></span>
-            <div id="Miasto"></div>
-        </div>
-        <hr>
-        <div class="configOption">
-            <button class="configButton" id="station" onclick="setStation(id)">Ustaw Miejsce</button>
-            <span></span>
-            <div id="Przystanek"></div>
-        </div >
-
     </div>
 
     <div id="setOption">
