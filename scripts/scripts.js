@@ -30,8 +30,8 @@ function config(){
     option      = document.getElementById("setOption");
     configPanel.style.zIndex    = "-1"
     option.style.zIndex         = "-1"
-    colors.style.setProperty('--background', back12);
-    colors.style.setProperty('--font',       font1);
+    colors.style.setProperty('--back-color', back12);
+    colors.style.setProperty('--font-color', font1);
     document.getElementById("motyw").innerHTML            = "Retro Style"
     document.getElementById("rodzajTransportu").innerHTML = "Transport Miejski"
     //config przystanku
@@ -73,14 +73,15 @@ function timeClick() {
     configPanel.style.zIndex==="-1" ? configPanel.style.zIndex="5" :  configPanel.style.zIndex="-1";
 }
 function changeColor(){
-    if(colors.style.getPropertyValue('--background')===back1){
-        colors.style.setProperty('--background', back2);
-        colors.style.setProperty('--font', font2);
+    console.log(colors.style.getPropertyValue('--back-color'))
+    if(colors.style.getPropertyValue('--back-color')===back1){
+        colors.style.setProperty('--back-color', back2);
+        colors.style.setProperty('--font-color', font2);
         document.getElementById("motyw").innerHTML="New Style"
     }
     else {
-        colors.style.setProperty('--background', back1);
-        colors.style.setProperty('--font', font1);
+        colors.style.setProperty('--back-color', back1);
+        colors.style.setProperty('--font-color', font1);
         document.getElementById("motyw").innerHTML="Retro Style"
     }
 }
