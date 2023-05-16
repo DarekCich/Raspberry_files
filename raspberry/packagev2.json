@@ -1,0 +1,32 @@
+{
+  "name": "Raspb",
+  "version": "1.0.0",
+  "description": "**Clone and run for a quick way to see Electron in action.**",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "built": "electron-builder --linux"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamzi/electron-quick-start.git"
+  },
+  "author": "Janez <janez.cadez007@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamzi/electron-quick-start/issues"
+  },
+  "homepage": "https://github.com/jamzi/electron-quick-start#readme",
+  "devDependencies": {
+   "electron": "4.0.0",
+   "electron-builder": "20.38.5"
+ },
+ "build": {
+   "appId": "dwr.Raspb",
+   "linux": {
+     "target": "deb",
+     "arch":["armv7l"],
+     "category": "Utility"
+   }
+ }
+}
