@@ -3,6 +3,7 @@
     --font-color: #E05E1F;
 }
 body{
+    padding-top: 5px;
     color: var(--font-color);
     margin: 0;
     height: 320px;

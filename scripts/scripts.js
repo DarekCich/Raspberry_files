@@ -59,7 +59,7 @@ function time(){
     }
     document.getElementById('Time').innerHTML=`${hours}:${minutes}:${seconds}`
 }
-setInterval(time,10)
+setInterval(time,500)
 
 function moveBottom(){
     indexOfShowTrip++;
@@ -73,7 +73,7 @@ function timeClick() {
     configPanel.style.zIndex==="-1" ? configPanel.style.zIndex="5" :  configPanel.style.zIndex="-1";
 }
 function changeColor(){
-    console.log(colors.style.getPropertyValue('--back-color'))
+    //console.log(colors.style.getPropertyValue('--back-color'))
     if(colors.style.getPropertyValue('--back-color')===back1){
         colors.style.setProperty('--back-color', back2);
         colors.style.setProperty('--font-color', font2);
@@ -108,7 +108,21 @@ async function userSignIn(username, password) {
 
 async function loadData(json) {
     listOfTrips.splice(0,listOfTrips.length)
+    let part = [];
     json.map((x) => {
+        let date = x.estimatedTime;
+        switch (cityName){
+            case "warszawa":
+                part = date.split(":")
+                break;
+            case "gdansk":
+                part = date.split("T")
+                part = part[1].split("Z")
+                part = part[0].split(":")
+                part[0]  = parseInt(part[0])+2;
+                break;
+        }
+        x.estimatedTime = `${part[0]}:${part[1]}`
         listOfTrips.push(x);
     })
     indexOfShowTrip = 0;
@@ -129,24 +143,12 @@ function loadOnViewTrips(){
         temp = temp + i - 1;
         if(temp === listOfTrips.length)
             temp=0
-        let date = listOfTrips[temp].estimatedTime;
-        switch (cityName){
-            case "warszawa":
-                part = date.split(":")
-                break;
-            case "gdansk":
-                part = date.split("T")
-                part = part[1].split("Z")
-                part = part[0].split(":")
-                part[0]  = parseInt(part[0])+2;
-                break;
-            }
         number.innerHTML= listOfTrips[temp].tripId;
         if(listOfTrips[temp].headsign.length>15)
             direction.innerHTML = `<MARQUEE>${listOfTrips[temp].headsign}</MARQUEE>`;
         else
             direction.innerHTML = listOfTrips[temp].headsign
-        time.innerHTML = `${part[0]}:${part[1]}`
+        time.innerHTML = listOfTrips[temp].estimatedTime
 
         }
 }
@@ -220,16 +222,8 @@ function loadCityOptions(){
 async function getZtmInfo(url,number){
     document.getElementById("loading").style.zIndex="2"
     await axios.get(`api/ztm/${url}/info/${number}`).then(response => {
-        switch (cityName){
-            case "warszawa":
-                loadData(response.data)
-                return;
-            case "gdansk":
-                loadData(response.data.departures)
-                return;
-            default:
-                return;
-        }
+        //console.log(response.data);
+        loadData(response.data.departures)
     }).catch(() => {
     });
     document.getElementById("loading").style.zIndex="-1"
@@ -341,4 +335,20 @@ function SetStationNames(name){
     document.getElementById("Przystanek").innerHTML = name;
 
 }
-
+function estimatedTime(){
+   if(listOfTrips<5){
+       getZtmInfo(cityName, numberOfStation).then(() => {});
+       return;
+   }
+   let temp =0 ;
+   let date   =  new Date()
+   while (true){
+       let part = listOfTrips[temp].estimatedTime.split(":")
+       if(part[1]>=date.getMinutes()){
+           break;
+       }
+       listOfTrips.splice(0,1)
+   }
+   loadOnViewTrips()
+}
+setInterval(estimatedTime,30000)
