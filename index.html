@@ -7,40 +7,39 @@
     <link rel="stylesheet" href="./styles/configPanel.css">
     <link rel="stylesheet" href="./styles/setOption.css">
     <link rel="stylesheet" href="./styles/temp.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="scripts/scripts.js"></script>
+    <script src="scripts/static.js"></script>
 </head>
 <body onload="onstart()">
-    <button id="top" class="controlButtons" onclick="moveTop()"></button>
-    <button id="bottom" class="controlButtons" onclick="moveBottom()" ></button>
     <div id="configPanel">
         <div class="backColor">
             <div class="configOption">
                 <button class="configButton"  onclick="changeColor()">Zmień motyw</button>
                 <span></span>
-                <div id="motyw" class="NameOfOption"></div>
+                <div id="styleOfTheme" class="NameOfOption"></div>
             </div>
             <hr>
             <div class="configOption">
                 <button class="configButton" onclick="changeTypeOfTransport()">Ustaw Rodzaj Transportu</button>
                 <span></span>
-                <div id="rodzajTransportu" class="NameOfOption"></div>
+                <div id="typeOfTransport" class="NameOfOption"></div>
             </div>
-            <hr>
-            <div class="configOption">
+            <hr >
+            <div class="configOption" id="cityDiv">
                 <button class="configButton" id="city"  onclick="setCity(id)">Ustaw Miasto</button>
                 <span></span>
-                <div id="Miasto" class="NameOfOption"></div>
+                <div id="cityName" class="NameOfOption"></div>
             </div>
-            <hr>
+            <hr id="cityLine">
             <div class="configOption">
                 <button class="configButton" id="station" onclick="setStation(id)">Ustaw Miejsce</button>
                 <span></span>
-                <div id="Przystanek" class="NameOfOption"></div>
+                <div id="stationNameInOptions" class="NameOfOption"></div>
             </div >
         </div>
     </div>
-
     <div id="setOption">
         <button class="configButton" onclick="changeTemp(-1)">&#8593</button>
         <div id="firstRow"  class="row"  onclick="setOption(id)" > firstRow  </div>
@@ -80,12 +79,12 @@
                 Godzina
             </div>
         </div>
-        <div class="Station border">
+        <div class="Station border" onclick="moveArrivals(-1)">
             <div     id = "number1" class = "number" ></div>
             <div id = "direction1"  class ="marq"></div>
             <div     id = "time1" ></div>
         </div>
-        <div class="Station border">
+        <div class="Station border" onclick="moveArrivals(1)">
             <div     id = "number2" class = "number"  ></div>
             <div id = "direction2" class ="marq" ></div>
             <div     id = "time2" ></div>

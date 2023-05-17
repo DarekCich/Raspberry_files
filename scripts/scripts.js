@@ -1,96 +1,52 @@
 let table ;
-let configPanel;
 let option;
 let colors;
 let login = "adam22ew3"
 let haslo = "abcwqeewq"
 //konfiguracja
-let back1 = "#000000";
-let back2 = "#003e93";
-let font1 = "#f5f6f7";
-//let font1 = "#E05E1F";
-let font2 = "#ffffff";
-let back12 = "#0a0a23";
-//let back12 = "#1b1b32";
-//let back12 = "#0a1e34";
-//let back12 = "#1B1B32";
-//let back22 = "#003e93";
-//let font12 = "#E05E1F";
-//let font22 = "#ffffff";
+
+const colorSets = [];
+let indexOfSelectedTheme= -1;
+let indexOfShowedOption =  0;
+let indexOfShowTrip     =  0;
 let Responses;
-let temp=0;
-let numberOfStation="";
-let cityName=""
-let mode    ="";
-let typeOfTransport =""
+let numberOfStation= "";
+let cityName= ""
+let mode    = "";
+let typeOfTransport = ""
 let listOfTrips = [];
-let indexOfShowTrip;
+
 function config(){
     // Get the root element
-    colors      = document.querySelector ( ":root");
-    table       = document.getElementById("myTable");
-    configPanel = document.getElementById("configPanel");
-    option      = document.getElementById("setOption");
-    configPanel.style.zIndex    = "-1"
+    colors  = document.querySelector ( ":root");
+    table   = document.getElementById( "myTable");
+    option  = document.getElementById( "setOption");
     option.style.zIndex         = "-1"
-    colors.style.setProperty('--back-color', back12);
-    colors.style.setProperty('--font-color', font1);
-    document.getElementById("motyw").innerHTML            = "Retro Style"
-    document.getElementById("rodzajTransportu").innerHTML = "Transport Miejski"
-    //config przystanku
-    // cityName        = "gdansk";
-    typeOfTransport = "publicTransport"
-    // numberOfStation = "20"
-    //axios
+    document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
     axios.defaults.baseURL = 'http://localhost:8080'
     //axios.defaults.baseURL = 'http://192.168.0.2:8080'
 }
 //interfejs użytkownika
-function time(){
-    let date   =  new Date()
-    let hours = String(date.getHours());
-    if(hours.length === 1){
-        hours = "0" + hours;
-    }
-    let minutes =  String(date.getMinutes());
-    if(minutes.length === 1){
-        minutes = "0" + minutes;
-    }
-    let seconds = String(date.getSeconds());
-    if(seconds.length === 1){
-        seconds = "0" + seconds;
-    }
-    document.getElementById('Time').innerHTML=`${hours}:${minutes}:${seconds}`
-}
-setInterval(time,500)
 
-function moveBottom(){
-    indexOfShowTrip++;
+function moveArrivals(iter){
+    indexOfShowTrip+=iter;
     loadOnViewTrips();
 }
-function moveTop(){
-    indexOfShowTrip--;
-    loadOnViewTrips();
-}
-function timeClick() {
-    configPanel.style.zIndex==="-1" ? configPanel.style.zIndex="5" :  configPanel.style.zIndex="-1";
-}
+
 function changeColor(){
-    //console.log(colors.style.getPropertyValue('--back-color'))
-    if(colors.style.getPropertyValue('--back-color')===back1){
-        colors.style.setProperty('--back-color', back2);
-        colors.style.setProperty('--font-color', font2);
-        document.getElementById("motyw").innerHTML="New Style"
+    indexOfSelectedTheme++;
+    if(indexOfSelectedTheme===colorSets.length){
+        indexOfSelectedTheme=0;
     }
-    else {
-        colors.style.setProperty('--back-color', back1);
-        colors.style.setProperty('--font-color', font1);
-        document.getElementById("motyw").innerHTML="Retro Style"
-    }
+    colors.style.setProperty('--back-color', colorSets[indexOfSelectedTheme].backColor);
+    colors.style.setProperty('--font-color', colorSets[indexOfSelectedTheme].fontColor);
+    document.getElementById("styleOfTheme").innerHTML = colorSets[indexOfSelectedTheme].nameOfStyle;
 }
 //main
 async function onstart(){
+    loadColors();
     config();
+    changeColor();
     await userSignIn(login, haslo)
     await setStartValue();
 }
@@ -100,7 +56,6 @@ async function userSignIn(username, password) {
         "username": username,
         "password": password,
     }).then(response => {
-
         axios.defaults.headers.common['Authorization'] = response.headers.authorization;
     }).catch(error => {
         console.log(error);
@@ -108,7 +63,11 @@ async function userSignIn(username, password) {
 }
 
 //loaders
-
+function loadColors(){
+    colorSets.push(new SetColor("#000000","#E05E1F","Retro Style"))
+    colorSets.push(new SetColor("#003e93","#f5f6f7","New Style"))
+    colorSets.push(new SetColor("#0a0a23","#f5f6f7","Wiktor Style"))
+}
 async function loadData(json) {
     listOfTrips.splice(0,listOfTrips.length)
     let part = [];
@@ -139,10 +98,10 @@ function loadOnViewTrips(){
     if(indexOfShowTrip === -1)
         indexOfShowTrip = listOfTrips.length -1
     for(let i =1 ; i<3 ; i++){
-        let number = document.getElementById(`number${i}`)
-        let direction = document.getElementById(`direction${i}`)
-        let time = document.getElementById(`time${i}`)
-        let temp = indexOfShowTrip;
+        let number      = document.getElementById(`number${i}`)
+        let direction   = document.getElementById(`direction${i}`)
+        let time        = document.getElementById(`time${i}`)
+        let temp             = indexOfShowTrip;
         temp = temp + i - 1;
         if(temp === listOfTrips.length)
             temp=0
@@ -164,27 +123,27 @@ async function loadStationOptions() {
         await setStationName(0);
         return;
     }
-    if(temp===Responses.length){
-        temp=0;
+    if(indexOfShowedOption===Responses.length){
+        indexOfShowedOption=0;
     }
-    else if(temp<0){
-        temp=Responses.length-1;
+    else if(indexOfShowedOption<0){
+        indexOfShowedOption=Responses.length-1;
     }
-    if(temp+2>=Responses.length){
-        if(temp+1>=Responses.length){
+    if(indexOfShowedOption+2>=Responses.length){
+        if(indexOfShowedOption+1>=Responses.length){
             setOptionValuesStation("secondRow",0);
             setOptionValuesStation("thirdRow" ,1);
         }
         else {
-            setOptionValuesStation("secondRow",temp+1);
+            setOptionValuesStation("secondRow",indexOfShowedOption+1);
             setOptionValuesStation("thirdRow" ,0);
         }
     }
     else{
-        setOptionValuesStation("secondRow",temp+1);
-        setOptionValuesStation("thirdRow" ,temp+2);
+        setOptionValuesStation("secondRow",indexOfShowedOption+1);
+        setOptionValuesStation("thirdRow" ,indexOfShowedOption+2);
     }
-    setOptionValuesStation("firstRow" ,temp);
+    setOptionValuesStation("firstRow" ,indexOfShowedOption);
 }
 
 function loadCityOptions(){
@@ -196,36 +155,44 @@ function loadCityOptions(){
         setCityName(0)
         return;
     }
-    if(temp===Responses.length){
-        temp=0;
+    if(indexOfShowedOption===Responses.length){
+        indexOfShowedOption=0;
     }
-    else if(temp<0){
-        temp=Responses.length-1;
+    else if(indexOfShowedOption<0){
+        indexOfShowedOption=Responses.length-1;
     }
-    if(temp+2>=Responses.length){
-        if(temp+1>=Responses.length){
+    if(indexOfShowedOption+2>=Responses.length){
+        if(indexOfShowedOption+1>=Responses.length){
             setOptionValues("secondRow",0);
             setOptionValues("thirdRow" ,1);
         }
         else {
-            setOptionValues("secondRow",temp+1);
+            setOptionValues("secondRow",indexOfShowedOption+1);
             setOptionValues("thirdRow" ,0);
         }
     }
     else{
-        setOptionValues("secondRow",temp+1);
-        setOptionValues("thirdRow" ,temp+2);
+        setOptionValues("secondRow",indexOfShowedOption+1);
+        setOptionValues("thirdRow" ,indexOfShowedOption+2);
     }
-    setOptionValues("firstRow" ,temp);
+    setOptionValues("firstRow" ,indexOfShowedOption);
 }
 
 // gettery
 
 async function getZtmInfo(url,number){
+    //console.log(`api/ztm/${url}/info/${number}`)
+    let x = false
     document.getElementById("loading").style.zIndex="2"
     await axios.get(`api/ztm/${url}/info/${number}`).then(response => {
         //console.log(response.data);
-        loadData(response.data.departures)
+        try {
+            if(response.data.departures !== undefined)
+                loadData(response.data.departures);
+        } catch (e) {
+            console.log(response)
+        }
+
     }).catch(() => {
     });
     document.getElementById("loading").style.zIndex="-1"
@@ -244,15 +211,21 @@ function changeTypeOfTransport(){
     if (document.getElementById("rodzajTransportu").innerHTML === "Kolej"){
         document.getElementById("rodzajTransportu").innerHTML = "Transport Miejski"
         typeOfTransport="publicTransport"
+        document.getElementById("cityDiv").style.display="flex"
+        document.getElementById("cityLine").style.display="flex"
     }
     else{
         document.getElementById("rodzajTransportu").innerHTML = "Kolej"
+        document.getElementById("rodzajTransportu").innerHTML
         typeOfTransport="trains"
+        document.getElementById("cityDiv").style.display="none"
+        document.getElementById("cityLine").style.display="none"
+
     }
 }
 
 async function changeTemp(number){
-    temp += number;
+    indexOfShowedOption += number;
     if(mode==='city'){
         await loadCityOptions();
         return;
@@ -267,7 +240,7 @@ async function changeTemp(number){
 //setters
 
 function setCityName(id){
-    document.getElementById("Miasto").innerHTML = Responses[id]
+    document.getElementById("cityName").innerHTML = Responses[id]
     switch (Responses[id].toLowerCase()){
         case "warszawa":
             cityName="warszawa";
@@ -287,13 +260,12 @@ async function setCity(){
     option.style.zIndex = "6";
 }
 async function setStartValue(){
+    typeOfTransport = "publicTransport"
     await getResponse(`api/displays/all/${typeOfTransport}`);
-   // console.log(Responses)
-    setCityName(0)
+    setCityName(1)
     await getResponse(`/api/ztm/${cityName}/displays`);
     setStationName(0)
-    getZtmInfo(cityName, numberOfStation).then(() => {});
-
+    await getZtmInfo(cityName, numberOfStation);
 }
 async function setStation() {
     mode="station"
@@ -328,13 +300,17 @@ async function setOption(id){
     option.style.zIndex="-1";
 }
 function SetStationNames(name){
-    if(name.length>9){
+    if(name.length>11){
         document.getElementById("StationName").innerHTML = `<MARQUEE>${name}</MARQUEE>`;
     }
     else{
         document.getElementById("StationName").innerHTML = name;
     }
-    document.getElementById("Przystanek").innerHTML = name;
+    if(name.length<15)
+        document.getElementById("stationNameInOptions").innerHTML = name;
+    else
+        document.getElementById("stationNameInOptions").innerHTML =`<MARQUEE>${name}</MARQUEE>`;
+
 
 }
 function estimatedTime(){
@@ -354,3 +330,11 @@ function estimatedTime(){
    loadOnViewTrips()
 }
 setInterval(estimatedTime,30000)
+
+class SetColor {
+    constructor(back, font, name) {
+        this.backColor = back;
+        this.fontColor = font;
+        this.nameOfStyle = name;
+    }
+}
