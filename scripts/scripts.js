@@ -15,7 +15,13 @@ let cityName= ""
 let mode    = "";
 let typeOfTransport = ""
 let listOfTrips = [];
-
+// on Start
+async function onstart(){
+    config();
+    loadColors();
+    await userSignIn(login, haslo)
+    await setStartValue();
+}
 function config(){
     // Get the root element
     colors  = document.querySelector ( ":root");
@@ -25,6 +31,30 @@ function config(){
     document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
     axios.defaults.baseURL = 'http://localhost:8080'
     //axios.defaults.baseURL = 'http://192.168.0.2:8080'
+}
+function loadColors(){
+    colorSets.push(new SetColor("#000000","#E05E1F","Retro Style"))
+    colorSets.push(new SetColor("#003e93","#f5f6f7","New Style"))
+    colorSets.push(new SetColor("#0a0a23","#f5f6f7","Wiktor Style"))
+    changeColor();
+}
+async function userSignIn(username, password) {
+    await axios.post('api/auth/signin', {
+        "username": username,
+        "password": password,
+    }).then(response => {
+        axios.defaults.headers.common['Authorization'] = response.headers.authorization;
+    }).catch(error => {
+        console.log(error);
+    });
+}
+async function setStartValue(){
+    typeOfTransport = "publicTransport"
+    await getResponse(`api/displays/all/${typeOfTransport}`);
+    setCityName(1)
+    await getResponse(`/api/ztm/${cityName}/displays`);
+    setStationName(0)
+    await getZtmInfo(cityName, numberOfStation);
 }
 //interfejs użytkownika
 
@@ -42,51 +72,32 @@ function changeColor(){
     colors.style.setProperty('--font-color', colorSets[indexOfSelectedTheme].fontColor);
     document.getElementById("styleOfTheme").innerHTML = colorSets[indexOfSelectedTheme].nameOfStyle;
 }
-//main
-async function onstart(){
-    loadColors();
-    config();
-    changeColor();
-    await userSignIn(login, haslo)
-    await setStartValue();
-}
-//logowanie
-async function userSignIn(username, password) {
-    await axios.post('api/auth/signin', {
-        "username": username,
-        "password": password,
-    }).then(response => {
-        axios.defaults.headers.common['Authorization'] = response.headers.authorization;
-    }).catch(error => {
-        console.log(error);
-    });
-}
-
 //loaders
-function loadColors(){
-    colorSets.push(new SetColor("#000000","#E05E1F","Retro Style"))
-    colorSets.push(new SetColor("#003e93","#f5f6f7","New Style"))
-    colorSets.push(new SetColor("#0a0a23","#f5f6f7","Wiktor Style"))
-}
-async function loadData(json) {
+async function loadData(ListOfTrips) {
     listOfTrips.splice(0,listOfTrips.length)
-    let part = [];
-    json.map((x) => {
-        let date = x.estimatedTime;
-        switch (cityName){
-            case "warszawa":
-                part = date.split(":")
-                break;
-            case "gdansk":
-                part = date.split("T")
-                part = part[1].split("Z")
-                part = part[0].split(":")
-                part[0]  = parseInt(part[0])+2;
-                break;
+    let estimatedTime = [];
+    ListOfTrips.map((trip) => {
+       // console.log( trip)
+        let date = trip.estimatedTime;
+        if(typeOfTransport !== "trains")
+            switch (cityName){
+                case "warszawa":
+                    estimatedTime = date.split(":")
+                    break;
+                case "gdansk":
+                    estimatedTime = date.split("T")
+                    estimatedTime = estimatedTime[1].split("Z")
+                    estimatedTime = estimatedTime[0].split(":")
+                    estimatedTime[0]  = parseInt(estimatedTime[0])+2;
+                    break;
+            }
+        else{
+            estimatedTime = date.split(":")
         }
-        x.estimatedTime = `${part[0]}:${part[1]}`
-        listOfTrips.push(x);
+        trip.estimatedTime = `${estimatedTime[0]}:${estimatedTime[1]}`
+        listOfTrips.push(trip);
     })
+
     indexOfShowTrip = 0;
     await loadOnViewTrips()
 }
@@ -98,25 +109,24 @@ function loadOnViewTrips(){
     if(indexOfShowTrip === -1)
         indexOfShowTrip = listOfTrips.length -1
     for(let i =1 ; i<3 ; i++){
-        let number      = document.getElementById(`number${i}`)
-        let direction   = document.getElementById(`direction${i}`)
-        let time        = document.getElementById(`time${i}`)
-        let temp             = indexOfShowTrip;
-        temp = temp + i - 1;
-        if(temp === listOfTrips.length)
-            temp=0
-        number.innerHTML= listOfTrips[temp].tripId;
-        if(listOfTrips[temp].headsign.length>15)
-            direction.innerHTML = `<MARQUEE>${listOfTrips[temp].headsign}</MARQUEE>`;
+        let number        = document.getElementById(`number${i}`)
+        let direction     = document.getElementById(`direction${i}`)
+        let time          = document.getElementById(`time${i}`)
+        let tempIndexOfShowTrip= indexOfShowTrip + i - 1;
+        if(tempIndexOfShowTrip === listOfTrips.length)
+            tempIndexOfShowTrip=0
+        number.innerHTML= listOfTrips[tempIndexOfShowTrip].tripId;
+        if(listOfTrips[tempIndexOfShowTrip].headsign.length>15)
+            direction.innerHTML = `<MARQUEE>${listOfTrips[tempIndexOfShowTrip].headsign}</MARQUEE>`;
         else
-            direction.innerHTML = listOfTrips[temp].headsign
-        time.innerHTML = listOfTrips[temp].estimatedTime
+            direction.innerHTML = listOfTrips[tempIndexOfShowTrip].headsign
+        time.innerHTML = listOfTrips[tempIndexOfShowTrip].estimatedTime
         }
 }
 
 async function loadStationOptions() {
     if(Responses.length===0){
-        document.getElementById("Przystanek").innerHTML = "brak przystankow"
+        document.getElementById("StationName").innerHTML = "brak przystankow"
         return;
     }
     if(Responses.length===1){
@@ -148,7 +158,7 @@ async function loadStationOptions() {
 
 function loadCityOptions(){
     if(Responses.length===0){
-        document.getElementById("Miasto").innerHTML = "brak Miast"
+        document.getElementById("cityName").innerHTML = "brak Miast"
         return;
     }
     if(Responses.length===1){
@@ -177,9 +187,7 @@ function loadCityOptions(){
     }
     setOptionValues("firstRow" ,indexOfShowedOption);
 }
-
-// gettery
-
+// getters
 async function getZtmInfo(url,number){
     //console.log(`api/ztm/${url}/info/${number}`)
     let x = false
@@ -187,6 +195,7 @@ async function getZtmInfo(url,number){
     await axios.get(`api/ztm/${url}/info/${number}`).then(response => {
         //console.log(response.data);
         try {
+            //console.log(response.data.departures )
             if(response.data.departures !== undefined)
                 loadData(response.data.departures);
         } catch (e) {
@@ -197,26 +206,42 @@ async function getZtmInfo(url,number){
     });
     document.getElementById("loading").style.zIndex="-1"
 }
+async function getPkpInfo(number){
+    //console.log(`api/ztm/${url}/info/${number}`)
+    let x = false
+    document.getElementById("loading").style.zIndex="2"
+    await axios.get(`api/pkp/stops/${number}`).then(response => {
+        try {
+            if(response.data.departures !== undefined)
+                loadData(response.data.departures);
+        } catch (e) {
+            console.log(response)
+        }
+    }).catch(() => {
+    });
+    document.getElementById("loading").style.zIndex="-1"
+}
 async function getResponse(path){
     await axios.get(path).then(response => {
         Responses = response.data;
+        Responses = response.data.sort( ( a, b ) =>{
+            return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+        });
     }).catch(error => {
         console.log(error);
     });
 }
-
 //changers
-
 function changeTypeOfTransport(){
-    if (document.getElementById("rodzajTransportu").innerHTML === "Kolej"){
-        document.getElementById("rodzajTransportu").innerHTML = "Transport Miejski"
+    if (document.getElementById("typeOfTransport").innerHTML === "Kolej"){
+        document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
         typeOfTransport="publicTransport"
         document.getElementById("cityDiv").style.display="flex"
         document.getElementById("cityLine").style.display="flex"
     }
     else{
-        document.getElementById("rodzajTransportu").innerHTML = "Kolej"
-        document.getElementById("rodzajTransportu").innerHTML
+        document.getElementById("typeOfTransport").innerHTML = "Kolej"
+        document.getElementById("typeOfTransport").innerHTML
         typeOfTransport="trains"
         document.getElementById("cityDiv").style.display="none"
         document.getElementById("cityLine").style.display="none"
@@ -259,25 +284,30 @@ async function setCity(){
     await loadCityOptions();
     option.style.zIndex = "6";
 }
-async function setStartValue(){
-    typeOfTransport = "publicTransport"
-    await getResponse(`api/displays/all/${typeOfTransport}`);
-    setCityName(1)
-    await getResponse(`/api/ztm/${cityName}/displays`);
-    setStationName(0)
-    await getZtmInfo(cityName, numberOfStation);
-}
+
 async function setStation() {
     mode="station"
-    await getResponse(`/api/ztm/${cityName}/displays`);
+    if(typeOfTransport==="trains"){
+        await getResponse(`/api/pkp/stops`);
+    }
+    else{
+        await getResponse(`/api/ztm/${cityName}/displays`);
+    }
     await loadStationOptions();
     option.style.zIndex = "6";
 }
 
  function setStationName(id){
     SetStationNames(Responses[id].name)
-    numberOfStation=Responses[id].displayCode;
-    getZtmInfo(cityName, numberOfStation).then(() => {});
+     mode="station"
+     if(typeOfTransport==="trains"){
+         numberOfStation=Responses[id].stop_id;
+         getPkpInfo(numberOfStation).then(() => {});
+     }
+     else{
+         numberOfStation=Responses[id].displayCode;
+         getZtmInfo(cityName, numberOfStation).then(() => {});
+     }
 }
 
 function setOptionValues(id, value){
@@ -300,26 +330,25 @@ async function setOption(id){
     option.style.zIndex="-1";
 }
 function SetStationNames(name){
-    if(name.length>11){
-        document.getElementById("StationName").innerHTML = `<MARQUEE>${name}</MARQUEE>`;
+    if(name.length>15){
+        document.getElementById("StationName").innerHTML            = `<MARQUEE>${name}</MARQUEE>`;
+        document.getElementById("stationNameInOptions").innerHTML   =`<MARQUEE>${name}</MARQUEE>`
     }
     else{
-        document.getElementById("StationName").innerHTML = name;
+        if(name.length>11)
+            document.getElementById("StationName").innerHTML = `<MARQUEE>${name}</MARQUEE>`;
+        else
+            document.getElementById("StationName").innerHTML        = name;
+        document.getElementById("stationNameInOptions").innerHTML   = name;
     }
-    if(name.length<15)
-        document.getElementById("stationNameInOptions").innerHTML = name;
-    else
-        document.getElementById("stationNameInOptions").innerHTML =`<MARQUEE>${name}</MARQUEE>`;
-
-
 }
 function estimatedTime(){
    if(listOfTrips<5){
        getZtmInfo(cityName, numberOfStation).then(() => {});
        return;
    }
-   let temp =0 ;
-   let date   =  new Date()
+   let temp= 0 ;
+   let date  =  new Date()
    while (true){
        let part = listOfTrips[temp].estimatedTime.split(":")
        if(part[1]>=date.getMinutes()){
