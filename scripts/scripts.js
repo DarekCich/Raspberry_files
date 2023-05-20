@@ -4,7 +4,8 @@ let colors;
 let login = "adam22ew3"
 let haslo = "abcwqeewq"
 //konfiguracja
-
+let timeDown;
+let timeUp;
 const colorSets = [];
 let indexOfSelectedTheme= -1;
 let indexOfShowedOption =  0;
@@ -82,29 +83,33 @@ function changeColor(){
 //loaders
 async function loadData(ListOfTrips) {
     listOfTrips.splice(0,listOfTrips.length)
-    let estimatedTime = [];
-    ListOfTrips.map((trip) => {
-       // console.log( trip)
-        let date = trip.estimatedTime;
-        if(typeOfTransport !== "trains")
-            switch (cityName){
-                case "Warszawa":
-                    estimatedTime = date.split(":")
-                    break;
-                case "Gdańsk":
-                    estimatedTime = date.split("T")
-                    estimatedTime = estimatedTime[1].split("Z")
-                    estimatedTime = estimatedTime[0].split(":")
-                    estimatedTime[0]  = parseInt(estimatedTime[0])+2;
-                    break;
+    if (ListOfTrips.length===0){
+        listOfTrips.push({tripId: "",headsign:"brak odjazdów",estimatedTime:""});
+    }
+    else{
+        let estimatedTime = [];
+        ListOfTrips.map((trip) => {
+            // console.log( trip)
+            let date = trip.estimatedTime;
+            if(typeOfTransport !== "trains")
+                switch (cityName){
+                    case "Warszawa":
+                        estimatedTime = date.split(":")
+                        break;
+                    case "Gdańsk":
+                        estimatedTime = date.split("T")
+                        estimatedTime = estimatedTime[1].split("Z")
+                        estimatedTime = estimatedTime[0].split(":")
+                        estimatedTime[0]  = parseInt(estimatedTime[0])+2;
+                        break;
+                }
+            else{
+                estimatedTime = date.split(":")
             }
-        else{
-            estimatedTime = date.split(":")
-        }
-        trip.estimatedTime = `${estimatedTime[0]}:${estimatedTime[1]}`
-        listOfTrips.push(trip);
-    })
-
+            trip.estimatedTime = `${estimatedTime[0]}:${estimatedTime[1]}`
+            listOfTrips.push(trip);
+        })
+    }
     indexOfShowTrip = 0;
     await loadOnViewTrips()
 }
@@ -123,7 +128,7 @@ function loadOnViewTrips(){
         if(tempIndexOfShowTrip === listOfTrips.length)
             tempIndexOfShowTrip=0
         number.innerHTML= listOfTrips[tempIndexOfShowTrip].tripId;
-        if(listOfTrips[tempIndexOfShowTrip].headsign.length>15)
+        if(listOfTrips[tempIndexOfShowTrip].headsign.length>13)
             direction.innerHTML = `<MARQUEE>${listOfTrips[tempIndexOfShowTrip].headsign}</MARQUEE>`;
         else
             direction.innerHTML = listOfTrips[tempIndexOfShowTrip].headsign
@@ -148,7 +153,7 @@ async function loadStationOptions() {
         }
 
     }
-   // console.log(Responses)
+
     if(Responses.length===0){
         document.getElementById("StationName").innerHTML = "brak przystankow"
         return;
@@ -234,6 +239,7 @@ async function getZtmInfo(url,number){
     document.getElementById("loading").style.zIndex="-1"
 }
 async function getPkpInfo(number){
+
     //console.log(`api/ztm/${url}/info/${number}`)
     document.getElementById("loading").style.zIndex="2"
     await axios.get(`api/pkp/stops/${number}`).then(response => {
@@ -245,6 +251,7 @@ async function getPkpInfo(number){
         }
     }).catch(() => {
     });
+
     document.getElementById("loading").style.zIndex="-1"
 }
 async function getResponse(path){
@@ -335,7 +342,11 @@ function setOptionValues(id, value){
 }
 
 function setOptionValuesStation(id, value){
-    document.getElementById(id).innerHTML=Responses[value][0];
+    if(typeOfTransport==="publicTransport")
+        document.getElementById(id).innerHTML=Responses[value][0];
+    else{
+        document.getElementById(id).innerHTML=Responses[value].name;
+    }
     document.getElementById(id ).setAttribute("value",`${value}`)
 }
 
@@ -362,20 +373,22 @@ function SetStationNames(name){
     }
 }
 function estimatedTime(){
-   if(listOfTrips<5){
+    let temp = false
+   if(listOfTrips.length<5){
        getZtmInfo(cityName, numberOfStation).then(() => {});
        return;
    }
-   let temp= 0 ;
    let date  =  new Date()
    while (true){
-       let part = listOfTrips[temp].estimatedTime.split(":")
+       let part = listOfTrips[0].estimatedTime.split(":")
        if(part[1]>=date.getMinutes()){
            break;
        }
        listOfTrips.splice(0,1)
+       temp=true
    }
-   loadOnViewTrips()
+   if(temp)
+        loadOnViewTrips()
 }
 setInterval(estimatedTime,30000)
 
@@ -388,8 +401,7 @@ class SetColor {
         this.nameOfStyle = name;
     }
 }
-var timeDown;
-var timeUp;
+
 function onDownTime(){
     timeDown = Date.now();
 }
