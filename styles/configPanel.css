@@ -7,7 +7,7 @@
 
     z-index: -1;
     background-color: var(--back-color);
-    border: solid rgba(255, 255, 255, 0.2) 2px;
+    border: solid var(--bordercolor) 2px;
     position: absolute;
     font-size: 25px;
     left: 16px;
@@ -53,7 +53,7 @@ select{
     text-align: center;
 }
 .backColor{
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--containercolor);
 
     height: 250px;
     width: 445px;

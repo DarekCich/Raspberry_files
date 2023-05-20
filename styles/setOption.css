@@ -8,7 +8,7 @@
     width: 470px;
     z-index: -1;
     background-color: var(--back-color);
-    border: solid rgba(255, 255, 255, 0.2) 2px;
+    border: solid var(--bordercolor) 2px;
     position: absolute;
     font-size: 25px;
     max-width: 500px;
@@ -17,18 +17,18 @@
 .row{
     display: flex;
     height: 20%;
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--containercolor);
     width: 90%;
     text-align: center;
     align-items: center;
     justify-content: center;
 
-    border: solid rgba(255, 255, 255, 0.2) 2px;
+    border: solid var(--bordercolor) 2px;
     border-radius: 8px;
 }
 #setOption .configButton{
     color: var(--font-color);
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--containercolor);
     font-size: 20px;
     height: 15%;
     width: 90%;

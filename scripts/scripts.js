@@ -35,9 +35,10 @@ function config(){
     //axios.defaults.baseURL = 'http://192.168.0.2:8080'
 }
 function loadColors(){
-    colorSets.push(new SetColor("#000000","#E05E1F","Retro Style"))
-    colorSets.push(new SetColor("#003e93","#f5f6f7","New Style"))
-    colorSets.push(new SetColor("#0a0a23","#f5f6f7","Wiktor Style"))
+    colorSets.push(new SetColor("#070606","#ff6701","#3f3f3f","#ffffff","retro"))
+    colorSets.push(new SetColor("#3b4bfd","#ffffff","#3b4bfd","#ffffff","basic"))
+    colorSets.push(new SetColor("#000000","#6ef500","#000000","#ffffff","contrast"))
+    colorSets.push(new SetColor("#242424","#ebebeb","#4e4949","#242424","dracula"))
     changeColor();
 }
 async function userSignIn(username, password) {
@@ -73,6 +74,8 @@ function changeColor(){
     }
     colors.style.setProperty('--back-color', colorSets[indexOfSelectedTheme].backColor);
     colors.style.setProperty('--font-color', colorSets[indexOfSelectedTheme].fontColor);
+    colors.style.setProperty('--containercolor', colorSets[indexOfSelectedTheme].containercolor);
+    colors.style.setProperty('--bordercolor', colorSets[indexOfSelectedTheme].bordercolor);
     document.getElementById("styleOfTheme").innerHTML = colorSets[indexOfSelectedTheme].nameOfStyle;
 }
 //loaders
@@ -365,9 +368,11 @@ function estimatedTime(){
 setInterval(estimatedTime,30000)
 
 class SetColor {
-    constructor(back, font, name) {
+    constructor(back, font,container,border ,name) {
         this.backColor = back;
         this.fontColor = font;
+        this.containercolor = container;
+        this.bordercolor = border;
         this.nameOfStyle = name;
     }
 }
