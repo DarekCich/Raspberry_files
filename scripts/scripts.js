@@ -15,6 +15,7 @@ let cityName= ""
 let mode    = "";
 let typeOfTransport = ""
 let listOfTrips = [];
+let auto= true;
 // on Start
 async function onstart(){
     config();
@@ -367,3 +368,27 @@ class SetColor {
         this.nameOfStyle = name;
     }
 }
+var timeDown;
+var timeUp;
+function onDownTime(){
+    timeDown = Date.now();
+}
+function onUpTime(){
+    timeUp =  Date.now() - timeDown;
+    if(timeUp >= 2000) console.log("git")
+    else timeClick();
+}
+
+function timeClick() {
+    document.getElementById("configPanel").style.zIndex==="5" ? document.getElementById("configPanel").style.zIndex="-1" :  document.getElementById("configPanel").style.zIndex="5";
+}
+function autoConfig(){
+    if(auto){
+        try{
+            
+        }catch{
+
+        }
+    }
+}
+setInterval(autoConfig,30000)

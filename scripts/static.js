@@ -15,6 +15,3 @@ function clock(){
     document.getElementById('Time').innerHTML=`${hours}:${minutes}:${seconds}`
 }
 setInterval(clock,500)
-function timeClick() {
-    document.getElementById("configPanel").style.zIndex==="5" ? configPanel.style.zIndex="-1" :  configPanel.style.zIndex="5";
-}
