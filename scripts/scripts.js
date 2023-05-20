@@ -193,7 +193,6 @@ function loadCityOptions(){
 // getters
 async function getZtmInfo(url,number){
     //console.log(`api/ztm/${url}/info/${number}`)
-    let x = false
     document.getElementById("loading").style.zIndex="2"
     await axios.get(`api/ztm/${url}/info/${number}`).then(response => {
         //console.log(response.data);
@@ -211,7 +210,6 @@ async function getZtmInfo(url,number){
 }
 async function getPkpInfo(number){
     //console.log(`api/ztm/${url}/info/${number}`)
-    let x = false
     document.getElementById("loading").style.zIndex="2"
     await axios.get(`api/pkp/stops/${number}`).then(response => {
         try {
@@ -389,6 +387,7 @@ function timeClick() {
 }
 async function autoConfig(){
     if(auto){
+        //favorite station
         try{
             await axios.get(`api/favorite/stop/getAll/by/user`).then(response => {
                 Responses = response.data;
@@ -424,6 +423,24 @@ async function autoConfig(){
         }catch{
 
         }
+        //color
+        // try{
+        //     await axios.get(`path`).then(response => {
+        //         Responses = response.data;
+        //     }).catch(error => {
+        //         console.log(error);
+        //     });
+        //     colorSets.map((colors)=>{
+        //         if(colors.name === Responses){
+        //             colors.style.setProperty('--back-color', colors.backColor );
+        //             colors.style.setProperty('--font-color', colors.fontColor );
+        //             document.getElementById("styleOfTheme").innerHTML = colors.name ;
+        //         }
+        //     })
+        //
+        // }catch{
+        //
+        // }
 
     }
 }
