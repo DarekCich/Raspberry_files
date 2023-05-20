@@ -21,7 +21,8 @@ async function onstart(){
     config();
     loadColors();
     await userSignIn(login, haslo)
-    await setStartValue();
+    typeOfTransport = "publicTransport"
+    //await setStartValue();
     auto= true
 }
 function config(){
@@ -52,7 +53,7 @@ async function userSignIn(username, password) {
     });
 }
 async function setStartValue(){
-    typeOfTransport = "publicTransport"
+
     await getResponse(`api/displays/all/${typeOfTransport}`);
     setCityName(1)
     await getResponse(`/api/ztm/${cityName}/displays`);
@@ -87,10 +88,10 @@ async function loadData(ListOfTrips) {
         let date = trip.estimatedTime;
         if(typeOfTransport !== "trains")
             switch (cityName){
-                case "warszawa":
+                case "Warszawa":
                     estimatedTime = date.split(":")
                     break;
-                case "gdansk":
+                case "Gdańsk":
                     estimatedTime = date.split("T")
                     estimatedTime = estimatedTime[1].split("Z")
                     estimatedTime = estimatedTime[0].split(":")
@@ -131,6 +132,23 @@ function loadOnViewTrips(){
 }
 
 async function loadStationOptions() {
+    //console.log(Responses)
+    if(typeOfTransport === "publicTransport"){
+        if(!Array.isArray(Responses)){
+            Responses = Object.entries(Responses);
+            Responses.sort((a,b)=>{
+                if ( a[0] < b[0] ){
+                    return -1;
+                }
+                if ( a[0] > b[0] ){
+                    return 1;
+                }
+                return 0;
+            },)
+        }
+
+    }
+   // console.log(Responses)
     if(Responses.length===0){
         document.getElementById("StationName").innerHTML = "brak przystankow"
         return;
@@ -139,6 +157,7 @@ async function loadStationOptions() {
         await setStationName(0);
         return;
     }
+
     if(indexOfShowedOption===Responses.length){
         indexOfShowedOption=0;
     }
@@ -197,6 +216,9 @@ function loadCityOptions(){
 async function getZtmInfo(url,number){
     //console.log(`api/ztm/${url}/info/${number}`)
     document.getElementById("loading").style.zIndex="2"
+    url = url.toLowerCase();
+    if(url==="gdańsk")
+        url="gdansk"
     await axios.get(`api/ztm/${url}/info/${number}`).then(response => {
         //console.log(response.data);
         try {
@@ -228,9 +250,6 @@ async function getPkpInfo(number){
 async function getResponse(path){
     await axios.get(path).then(response => {
         Responses = response.data;
-        Responses = response.data.sort( ( a, b ) =>{
-            return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
-        });
     }).catch(error => {
         console.log(error);
     });
@@ -271,17 +290,6 @@ async function changeTemp(number){
 
 function setCityName(id){
     document.getElementById("cityName").innerHTML = Responses[id]
-    switch (Responses[id].toLowerCase()){
-        case "warszawa":
-            cityName="warszawa";
-            return;
-        case "gdańsk":
-            cityName="gdansk";
-            return;
-        default:
-            cityName=""
-            return;
-    }
 }
 async function setCity(){
     auto=false;
@@ -298,21 +306,25 @@ async function setStation() {
         await getResponse(`/api/pkp/stops`);
     }
     else{
-        await getResponse(`/api/ztm/${cityName}/displays`);
+        cityName=  cityName.charAt(0).toUpperCase() + cityName.slice(1);
+        await getResponse(`/api/ztm/displays/${cityName}`);
     }
     await loadStationOptions();
     option.style.zIndex = "6";
 }
 
  function setStationName(id){
-    SetStationNames(Responses[id].name)
+
      mode="station"
      if(typeOfTransport==="trains"){
+         SetStationNames(Responses[id].name)
          numberOfStation=Responses[id].stop_id;
          getPkpInfo(numberOfStation).then(() => {});
      }
      else{
-         numberOfStation=Responses[id].displayCode;
+         SetStationNames(Responses[id][0])
+         //console.log(Responses[id][1][0])
+         numberOfStation=Responses[id][1][0];
          getZtmInfo(cityName, numberOfStation).then(() => {});
      }
 }
@@ -323,7 +335,7 @@ function setOptionValues(id, value){
 }
 
 function setOptionValuesStation(id, value){
-    document.getElementById(id).innerHTML=Responses[value].name;
+    document.getElementById(id).innerHTML=Responses[value][0];
     document.getElementById(id ).setAttribute("value",`${value}`)
 }
 
@@ -342,7 +354,7 @@ function SetStationNames(name){
         document.getElementById("stationNameInOptions").innerHTML   =`<MARQUEE>${name}</MARQUEE>`
     }
     else{
-        if(name.length>11)
+        if(name.length>9)
             document.getElementById("StationName").innerHTML = `<MARQUEE>${name}</MARQUEE>`;
         else
             document.getElementById("StationName").innerHTML        = name;
@@ -428,24 +440,26 @@ async function autoConfig(){
         }catch{
 
         }
-        //color
-        // try{
-        //     await axios.get(`path`).then(response => {
-        //         Responses = response.data;
-        //     }).catch(error => {
-        //         console.log(error);
-        //     });
-        //     colorSets.map((colors)=>{
-        //         if(colors.name === Responses){
-        //             colors.style.setProperty('--back-color', colors.backColor );
-        //             colors.style.setProperty('--font-color', colors.fontColor );
-        //             document.getElementById("styleOfTheme").innerHTML = colors.name ;
-        //         }
-        //     })
-        //
-        // }catch{
-        //
-        // }
+        try{
+            await axios.get(`/api/user/all/get/app/style`).then(response => {
+                Responses = response.data;
+            }).catch(error => {
+                console.log(error);
+            });
+            if(colors.nameOfStyle !== Responses.appStyle.toString()){
+                colorSets.map((color)=>{
+                    if(color.nameOfStyle === Responses.appStyle.toString()){
+                        colors.style.setProperty('--back-color', color.backColor );
+                        colors.style.setProperty('--font-color', color.fontColor );
+                        colors.style.setProperty('--containercolor', color.containercolor);
+                        colors.style.setProperty('--bordercolor', color.bordercolor);
+                        document.getElementById("styleOfTheme").innerHTML = color.nameOfStyle ;
+                    }
+                })
+            }
+        }catch{
+
+        }
 
     }
 }
