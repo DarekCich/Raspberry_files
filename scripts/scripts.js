@@ -22,6 +22,7 @@ async function onstart(){
     loadColors();
     await userSignIn(login, haslo)
     await setStartValue();
+    auto= true
 }
 function config(){
     // Get the root element
@@ -65,6 +66,7 @@ function moveArrivals(iter){
 }
 
 function changeColor(){
+    auto=false;
     indexOfSelectedTheme++;
     if(indexOfSelectedTheme===colorSets.length){
         indexOfSelectedTheme=0;
@@ -234,6 +236,7 @@ async function getResponse(path){
 }
 //changers
 function changeTypeOfTransport(){
+    auto=false;
     if (document.getElementById("typeOfTransport").innerHTML === "Kolej"){
         document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
         typeOfTransport="publicTransport"
@@ -280,6 +283,7 @@ function setCityName(id){
     }
 }
 async function setCity(){
+    auto=false;
     mode = "city"
     await getResponse(`api/displays/all/${typeOfTransport}`);
     await loadCityOptions();
@@ -287,6 +291,7 @@ async function setCity(){
 }
 
 async function setStation() {
+    auto=false;
     mode="station"
     if(typeOfTransport==="trains"){
         await getResponse(`/api/pkp/stops`);
@@ -375,20 +380,51 @@ function onDownTime(){
 }
 function onUpTime(){
     timeUp =  Date.now() - timeDown;
-    if(timeUp >= 2000) console.log("git")
+    if(timeUp >= 2000) auto=true
     else timeClick();
 }
 
 function timeClick() {
     document.getElementById("configPanel").style.zIndex==="5" ? document.getElementById("configPanel").style.zIndex="-1" :  document.getElementById("configPanel").style.zIndex="5";
 }
-function autoConfig(){
+async function autoConfig(){
     if(auto){
         try{
-            
+            await axios.get(`api/favorite/stop/getAll/by/user`).then(response => {
+                Responses = response.data;
+                Responses = response.data.sort( ( a, b ) =>{
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                });
+            }).catch(error => {
+                console.log(error);
+            });
+            Responses.map(async (resp) => {
+                if (resp.status) {
+                    if (numberOfStation !== resp.stopIds[0]){
+                        SetStationNames(resp.stopName);
+                        document.getElementById("cityName").innerHTML = resp.cityName
+                        cityName = resp.cityName;
+                        numberOfStation = resp.stopIds[0]
+                        try {
+                            await getResponse(`api/displays/all/${typeOfTransport}`);
+                            if (typeOfTransport === "trains") {
+                                getPkpInfo(numberOfStation).then(() => {
+                                });
+                            } else {
+                                getZtmInfo(cityName, numberOfStation).then(() => {
+                                });
+                            }
+                        } catch {
+
+                        }
+                    }
+
+                }
+            })
         }catch{
 
         }
+
     }
 }
-setInterval(autoConfig,30000)
+setInterval(autoConfig,2000)
