@@ -11,9 +11,21 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="scripts/scripts.js"></script>
     <script src="scripts/static.js"></script>
+    <script src="scripts/renderer.js"></script>
+
 </head>
 <body onload="onstart()">
-    <div id="configPanel">
+<script>
+    require('electron').ipcRenderer.send('loginDataRequest');
+
+    // Odbiór danych logowania z procesu głównego
+    require('electron').ipcRenderer.on('loginDataResponse', (event, loginData) => {
+        // Aktualizacja elementów HTML z otrzymanymi danymi logowania
+        console.log(loginData)
+        setLogin(loginData)
+    })
+</script>
+    <div id="configPanel" >
         <div class="backColor">
             <div class="configOption">
                 <button class="configButton"  onclick="changeColor()">Zmień motyw</button>
@@ -90,6 +102,8 @@
             <div     id = "time2" ></div>
         </div>
     </div>
+    <button onclick="show()">click me</button>
+    <div id ="login"></div>
 
 </body>
 </html>

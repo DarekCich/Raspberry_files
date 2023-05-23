@@ -21,10 +21,9 @@ let auto= true;
 async function onstart(){
     config();
     loadColors();
-    await userSignIn(login, haslo)
     typeOfTransport = "publicTransport"
     //await setStartValue();
-    auto= true
+
 }
 function config(){
     // Get the root element
@@ -35,6 +34,13 @@ function config(){
     document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
     axios.defaults.baseURL = 'http://localhost:8080'
     //axios.defaults.baseURL = 'http://192.168.0.2:8080'
+}
+async function setLogin(loginData) {
+    document.getElementById("login").innerHTML = `git`;
+    login = loginData.username;
+    haslo = loginData.password;
+    await userSignIn(login, haslo)
+    auto = true;
 }
 function loadColors(){
     colorSets.push(new SetColor("#070606","#ff6701","#3f3f3f","#ffffff","retro"))
@@ -67,7 +73,9 @@ function moveArrivals(iter){
     indexOfShowTrip+=iter;
     loadOnViewTrips();
 }
-
+function show(){
+    document.getElementById("login").innerHTML = `${login} ${haslo}`;
+}
 function changeColor(){
     auto=false;
     indexOfSelectedTheme++;
@@ -407,8 +415,10 @@ function onDownTime(){
 }
 function onUpTime(){
     timeUp =  Date.now() - timeDown;
-    if(timeUp >= 2000) auto=true
+    if(timeUp >= 2000 && timeUp<=5000) auto=true
+    else if (timeUp>5000) window.location.replace("new.html");
     else timeClick();
+
 }
 
 function timeClick() {

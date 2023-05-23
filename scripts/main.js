@@ -1,6 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
-
+const {app, BrowserWindow, ipcMain } = require('electron')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -11,23 +10,54 @@ function createWindow () {
     {
       width: 720,
       height: 480,
-      vibrancy: {
-        theme: 'light', // (default) or 'dark' or '#rrggbbaa'
-        effect: 'blur', // (default) or 'blur'
-        disableOnBlur: false, // (default)
-      }
-  //    webPreferences: {
-  //      devTools: false
-  //    }
+        webPreferences: {
+          devTools: true,
+            nodeIntegration: true
+     }
     })
-  // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+    const path = require('path');
+    const fs = require('fs');
+  // and load the index.html of the app
+    const userDataPath = app.getPath('userData');
+    const loginDataPath = path.join(userDataPath, 'loginData.json');
+    let loginData;
+    try {
+        if (fs.existsSync(loginDataPath)) {
+
+            console.log(userDataPath)
+            mainWindow.loadFile('index.html')
+
+        }
+        else {
+            mainWindow.loadFile('new.html')
+
+        }
+    } catch(err) {
+        console.error(err)
+    }
+
+
   mainWindow.setFullScreen(true)
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 
-  // Emitted when the window is closed.
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools()
+    ipcMain.on('loginData', (event, data) => {
+        const { username, password } = data;
+        const loginData = {
+            username: username,
+            password: password
+        };
+        // Przetwarzanie otrzymanych danych
+        fs.writeFileSync(loginDataPath, JSON.stringify(loginData));
+        mainWindow.loadFile('index.html')
+    });
+    ipcMain.on('loginDataRequest', (event) => {
+        loginData = JSON.parse(fs.readFileSync(loginDataPath, 'utf-8'));
+        // Wysłanie danych logowania do procesu renderowania
+        event.sender.send('loginDataResponse', loginData);
+    });  // Emitted when the window is closed.
+
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
