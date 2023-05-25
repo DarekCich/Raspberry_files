@@ -230,6 +230,7 @@ function loadCityOptions(){
 async function getZtmInfo(url,number){
     //console.log(`api/ztm/${url}/info/${number}`)
     document.getElementById("loading").style.zIndex="2"
+    url = url.split(" ")[0]
     url = url.toLowerCase();
     if(url==="gdańsk")
         url="gdansk"
@@ -421,7 +422,6 @@ function onUpTime(){
     if(timeUp >= 2000 && timeUp<=5000) auto=true
     else if (timeUp>5000) window.location.href = "../pages/loginPanel.html";
     else timeClick();
-
 }
 
 function timeClick() {
