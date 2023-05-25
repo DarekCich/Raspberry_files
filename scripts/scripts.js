@@ -419,7 +419,7 @@ function onDownTime(){
 function onUpTime(){
     timeUp =  Date.now() - timeDown;
     if(timeUp >= 2000 && timeUp<=5000) auto=true
-    else if (timeUp>5000) window.location.replace("LoginPanel.html");
+    else if (timeUp>5000) window.location.replace("pages/loginPanel.html");
     else timeClick();
 
 }

@@ -97,10 +97,8 @@ function createWindow () {
             setTimeout(() => {
                 try {
                     if (fs.existsSync(loginDataPath)) {
-
                         console.log(userDataPath)
                         mainWindow.loadFile('pages/index.html')
-
                     }
                     else {
                         mainWindow.loadFile('pages/loginPanel.html')
