@@ -18,10 +18,15 @@
   },
   "homepage": "https://github.com/jamzi/electron-quick-start#readme",
   "devDependencies": {
-   "electron": "4.0.0",
-   "electron-builder": "20.38.5"
- },
- "build": {
-   "appId": "dwr.Raspb"
- }
+    "electron": "4.0.0",
+    "electron-builder": "20.38.5"
+  },
+  "build": {
+    "appId": "dwr.Raspb"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "jquery": "^3.7.0",
+    "node-wifi": "^2.0.16"
+  }
 }

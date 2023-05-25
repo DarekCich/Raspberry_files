@@ -1,8 +1,10 @@
 let table ;
 let option;
 let colors;
-let login = "adam22ew3"
-let haslo = "abcwqeewq"
+let login = ""
+let haslo = ""
+//let login = "adam22ew3"
+//let haslo = "abcwqeewq"
 //konfiguracja
 let timeDown;
 let timeUp;
@@ -36,7 +38,6 @@ function config(){
     //axios.defaults.baseURL = 'http://192.168.0.2:8080'
 }
 async function setLogin(loginData) {
-    document.getElementById("login").innerHTML = `git`;
     login = loginData.username;
     haslo = loginData.password;
     await userSignIn(login, haslo)
@@ -274,6 +275,7 @@ function changeTypeOfTransport(){
     auto=false;
     if (document.getElementById("typeOfTransport").innerHTML === "Kolej"){
         document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
+        document.getElementById("Number").innerHTML = "Linia"
         typeOfTransport="publicTransport"
         document.getElementById("cityDiv").style.display="flex"
         document.getElementById("cityLine").style.display="flex"
@@ -282,6 +284,7 @@ function changeTypeOfTransport(){
         document.getElementById("typeOfTransport").innerHTML = "Kolej"
         document.getElementById("typeOfTransport").innerHTML
         typeOfTransport="trains"
+        document.getElementById("Number").innerHTML = "Peron"
         document.getElementById("cityDiv").style.display="none"
         document.getElementById("cityLine").style.display="none"
 
@@ -416,7 +419,7 @@ function onDownTime(){
 function onUpTime(){
     timeUp =  Date.now() - timeDown;
     if(timeUp >= 2000 && timeUp<=5000) auto=true
-    else if (timeUp>5000) window.location.replace("new.html");
+    else if (timeUp>5000) window.location.replace("LoginPanel.html");
     else timeClick();
 
 }

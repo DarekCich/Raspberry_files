@@ -1,5 +1,8 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain } = require('electron')
+const wifi = require('node-wifi');
+const fs = require("fs");
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -15,26 +18,39 @@ function createWindow () {
             nodeIntegration: true
      }
     })
+    wifi.init({
+        iface: null // Możesz podać nazwę interfejsu Wi-Fi, jeśli masz więcej niż jeden
+    });
     const path = require('path');
     const fs = require('fs');
   // and load the index.html of the app
     const userDataPath = app.getPath('userData');
     const loginDataPath = path.join(userDataPath, 'loginData.json');
     let loginData;
-    try {
-        if (fs.existsSync(loginDataPath)) {
+    wifi.getCurrentConnections((error, currentConnections) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if (currentConnections.length > 0) {
+                try {
+                    if (fs.existsSync(loginDataPath)) {
 
-            console.log(userDataPath)
-            mainWindow.loadFile('index.html')
+                        console.log(userDataPath)
+                        mainWindow.loadFile('pages/index.html')
 
+                    }
+                    else {
+                        mainWindow.loadFile('pages/loginPanel.html')
+                    }
+                } catch(err) {
+                    console.error(err)
+                }
+            } else {
+                mainWindow.loadFile('pages/internetPanel.html')
+            }
         }
-        else {
-            mainWindow.loadFile('new.html')
+    });
 
-        }
-    } catch(err) {
-        console.error(err)
-    }
 
 
   mainWindow.setFullScreen(true)
@@ -50,7 +66,7 @@ function createWindow () {
         };
         // Przetwarzanie otrzymanych danych
         fs.writeFileSync(loginDataPath, JSON.stringify(loginData));
-        mainWindow.loadFile('index.html')
+        // mainWindow.loadFile('index.html')
     });
     ipcMain.on('loginDataRequest', (event) => {
         loginData = JSON.parse(fs.readFileSync(loginDataPath, 'utf-8'));
@@ -58,7 +74,48 @@ function createWindow () {
         event.sender.send('loginDataResponse', loginData);
     });  // Emitted when the window is closed.
 
-  mainWindow.on('closed', function () {
+    ipcMain.on('internet', (event) => {
+        wifi.scan((error, networks) => {
+            if (error) {
+                console.log(error);
+                event.sender.send('internetData', "");
+                return;
+            }
+            event.sender.send('internetData', networks);
+
+
+        });
+    });
+    ipcMain.on('internetConnect', (event, data) => {
+        console.log(data.ssid);
+        console.log(data.password);
+        wifi.connect({ ssid: data.ssid, password: data.password }, (error) => {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            setTimeout(() => {
+                try {
+                    if (fs.existsSync(loginDataPath)) {
+
+                        console.log(userDataPath)
+                        mainWindow.loadFile('pages/index.html')
+
+                    }
+                    else {
+                        mainWindow.loadFile('pages/loginPanel.html')
+                    }
+                } catch(err) {
+                    console.error(err)
+                }
+            }, 2000);
+
+            })
+            // Wysłanie danych logowania do procesu renderowania
+
+    });
+
+    mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.

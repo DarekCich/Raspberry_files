@@ -1,10 +1,11 @@
 var lastTime = 0;
 var replaceable = true;
+let name = "usernameInput";
 
 //emulate mouse press events via keyboard keypress
-$("html").keydown(function (event) {
+document.querySelector("html").addEventListener("keydown", function(event) {
     var pressedKey = event.key;
-
+    document.getElementById("data").innerHTML = ""
     //determine the key pressed and emulate the mouse click event
     switch (pressedKey) {
         case "0": document.getElementById("t9-zero").click(); break;
@@ -22,38 +23,61 @@ $("html").keydown(function (event) {
         case "*": document.getElementById("t9-ast").click(); break;
         case "Delete": document.getElementById("t9-ast").click(); break;
     }
-})
-$(document).ready(function() {
-    $("#usernameInput, #passwordInput").click(function() {
-        console.log("git")
-    });
+});
+
+document.getElementById("usernameInput").addEventListener("click", function() {
+    document.getElementById("data").innerHTML = ""
+    name = "usernameInput";
+});
+
+document.getElementById("passwordInput").addEventListener("click", function() {
+    document.getElementById("data").innerHTML = ""
+    name = "passwordInput";
 });
 
 //to add or not to add
-$(".t9-button").click(function () {
-    // console.log(event.which);
-    var thisTime = event.timeStamp;				//determine the event timestamp
+var buttons = document.querySelectorAll(".t9-button");
+buttons.forEach(function(button) {
+    button.addEventListener("click", function() {
+        var thisTime = event.timeStamp;				//determine the event timestamp
 
-    //determine whether to replace the last entered character or not
-    if ((thisTime - lastTime) > 1000) {
-        replaceable = false;
-    }
+        //determine whether to replace the last entered character or not
+        if ((thisTime - lastTime) > 1000) {
+            replaceable = false;
+        } else {
+            replaceable = true;
+        }
 
-    else {
-        replaceable = true;
-    }
+        //reset lastTime value
+        lastTime = thisTime;
 
-    //reset lastTime value
-    lastTime = thisTime;
-
-    var newText = type($(this).attr("data-value"));
-    $("#t9-field").val(newText);
-})
-
+        var newText = type(button.getAttribute("data-value"));
+        document.getElementById(name).value = newText;
+    });
+});
+function log(){
+    let ret = false;
+    let username = document.getElementById("usernameInput").value;
+    let password = document.getElementById("passwordInput").value;
+    axios.defaults.baseURL = 'http://localhost:8080'
+    //axios.defaults.baseURL = 'http://192.168.0.2:8080'
+     axios.post('api/auth/signin', {
+        "username": username,
+        "password": password,
+    }).then(response => {
+         console.log("git")
+         ret = true;
+    }).catch(error => {
+         document.getElementById("data").innerHTML = "nie poprawne dane"
+         ret = false;
+     })
+    return ret
+}
 
 //actual typing logic
 function type(x) {
-    var text = $("#t9-field").val();
+    document.getElementById("data").innerHTML = ""
+    var text = document.getElementById(name).value;
     // console.log(replaceable);
     var length = text.length - 1;
     //console.log(text[length]);

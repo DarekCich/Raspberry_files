@@ -1,6 +1,13 @@
+:root{
+    --back-color: #070606;
+    --font-color: #E05E1F;
+    --containercolor: #3f3f3f;
+    --bordercolor: #ffffff;
+}
+
 body{
+
     padding-top: 5px;
-    color: var(--font-color);
     margin: 0;
     height: 330px;
     width: 480px;
@@ -8,20 +15,17 @@ body{
     overflow: hidden;
     max-width: 500px;
     max-height: 340px;
+    z-index: 1;
 }
 
 
 #t9-article {
     margin: auto;
     height: 3px;
-    width: 320px;
+    width: 300px;
     text-align: center;
     border-radius: 0px;
     margin-top: 5%;
-}
-#t9-buttons {
-    display: none; /* Ukrywanie początkowe div-a */
-
 }
 /* #t9-frame {
     height: 480px;
@@ -29,29 +33,49 @@ body{
     font-family: "Consolas";
     min-width: 200px;
 } */
+.configButton{
+    width: 30%;
+    height: 94%;
+    border-radius: 30px;
+    font-size: 22px;
 
+}
+input{
+    width: 26.5%;
+    height: 50px;
+    margin-bottom: 5px;
+    border-radius: 30px;
+    padding: 5px 10px;
+    font-size: 22px;
+
+}
+#bar{
+    height: 70px;
+    margin-left: 10px;
+    width: 480px;
+}
 #t9-input {
     height: 100px;
     text-align: center;
 }
 
-#t9-field {
-    height: 70px;
-    width: 98%;
-    font-size: 20px;
-    text-align: right;
-    border: 2px solid #000;
-}
 
 .t9-buttons {
-    height: 300px;
+    font-size: 22px;
+
+    height: 260px;
     width: 480px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    background-color: var(--back-color);
 }
 
 .t9-button {
-    height: 25%;
-    width: 33.33%;
-    background-color: #333;
+    font-size: 22px;
+    padding-top: 5px;
+    height: 23%;
+    width: 32%;
+    background-color: #3f3f3f;
     color: #FFF;
     display: inline-block;
     text-align: center;
@@ -62,7 +86,8 @@ body{
     cursor: pointer;
     float: left;
     border: 2px solid #FFF;
-    font-size: 20px;
+    font-size: 25px;
+    color: white;
     font-weight: bold;
     font-family: "Consolas";
 }
@@ -72,8 +97,9 @@ body{
 }
 
 .t9-button-text {
+    color: #d7d7d7;
     display: block;
-    font-size: 10px;
+    font-size: 20px;
     text-align: center;
 }
 
