@@ -67,25 +67,22 @@ function loadWifiOptions(){
 
 
 document.querySelector("html").addEventListener("keydown", function(event) {
-    var pressedKey = event.key;
     document.getElementById("data").innerHTML = ""
-    //determine the key pressed and emulate the mouse click event
-    switch (pressedKey) {
-        case "0": document.getElementById("t9-zero").click(); break;
-        case "1": document.getElementById("t9-one").click(); break;
-        case "2": document.getElementById("t9-two").click(); break;
-        case "3": document.getElementById("t9-three").click(); break;
-        case "4": document.getElementById("t9-four").click(); break;
-        case "5": document.getElementById("t9-five").click(); break;
-        case "6": document.getElementById("t9-six").click(); break;
-        case "7": document.getElementById("t9-seven").click(); break;
-        case "8": document.getElementById("t9-eight").click(); break;
-        case "9": document.getElementById("t9-nine").click(); break;
-        case "#": document.getElementById("t9-hash").click(); break;
-        case "Backspace": document.getElementById("t9-hash").click(); break;
-        case "*": document.getElementById("t9-ast").click(); break;
-        case "Delete": document.getElementById("t9-ast").click(); break;
-    }
+});
+let passwordField = document.getElementById('passwordInput');
+let timer;
+
+passwordField.addEventListener('mousedown', () => {
+    timer = setTimeout(() => {
+        passwordField.type = 'text';
+        setTimeout(() => {
+            passwordField.type = 'password';
+        }, 5000);
+    }, 1000);
+});
+
+passwordField.addEventListener('mouseup', () => {
+    clearTimeout(timer);
 });
 
 

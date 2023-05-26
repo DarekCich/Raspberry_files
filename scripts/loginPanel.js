@@ -4,25 +4,22 @@ let name = "usernameInput";
 
 //emulate mouse press events via keyboard keypress
 document.querySelector("html").addEventListener("keydown", function(event) {
-    var pressedKey = event.key;
     document.getElementById("data").innerHTML = ""
-    //determine the key pressed and emulate the mouse click event
-    switch (pressedKey) {
-        case "0": document.getElementById("t9-zero").click(); break;
-        case "1": document.getElementById("t9-one").click(); break;
-        case "2": document.getElementById("t9-two").click(); break;
-        case "3": document.getElementById("t9-three").click(); break;
-        case "4": document.getElementById("t9-four").click(); break;
-        case "5": document.getElementById("t9-five").click(); break;
-        case "6": document.getElementById("t9-six").click(); break;
-        case "7": document.getElementById("t9-seven").click(); break;
-        case "8": document.getElementById("t9-eight").click(); break;
-        case "9": document.getElementById("t9-nine").click(); break;
-        case "#": document.getElementById("t9-hash").click(); break;
-        case "Backspace": document.getElementById("t9-hash").click(); break;
-        case "*": document.getElementById("t9-ast").click(); break;
-        case "Delete": document.getElementById("t9-ast").click(); break;
-    }
+});
+let passwordField = document.getElementById('passwordInput');
+let timer;
+
+passwordField.addEventListener('mousedown', () => {
+    timer = setTimeout(() => {
+        passwordField.type = 'text';
+        setTimeout(() => {
+            passwordField.type = 'password';
+        }, 5000);
+    }, 1000);
+});
+
+passwordField.addEventListener('mouseup', () => {
+    clearTimeout(timer);
 });
 
 document.getElementById("usernameInput").addEventListener("click", function() {
@@ -48,7 +45,7 @@ buttons.forEach(function(button) {
             replaceable = true;
         }
 
-        //reset lastTime value
+        //reset lastTime value1
         lastTime = thisTime;
 
         var newText = type(button.getAttribute("data-value"));
@@ -83,7 +80,7 @@ function type(x) {
     //console.log(text[length]);
 
     switch (x) {
-        case "1":
+        case "1b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -116,14 +113,12 @@ function type(x) {
                         return text;
                 }
             }
-
             else {
                 text = text + ".";
                 return text;
             }
-        };
-
-        case "2":
+        }
+        case "2b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -167,9 +162,9 @@ function type(x) {
                 text = text + "a";
                 return text;
             }
-        };
+        }
 
-        case "3":
+        case "3b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -214,7 +209,7 @@ function type(x) {
             }
         };
 
-        case "4":
+        case "4b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -258,7 +253,7 @@ function type(x) {
             }
         };
 
-        case "5":
+        case "5b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -303,7 +298,7 @@ function type(x) {
             }
         };
 
-        case "6":
+        case "6b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -348,7 +343,7 @@ function type(x) {
             }
         };
 
-        case "7":
+        case "7b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -401,7 +396,7 @@ function type(x) {
             }
         };
 
-        case "8":
+        case "8b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -441,7 +436,7 @@ function type(x) {
             }
         };
 
-        case "9":
+        case "9b":
         {
             if (replaceable == true) {
                 switch (text[length]){
@@ -489,7 +484,7 @@ function type(x) {
             }
         };
 
-        case "0":
+        case "0b":
         {
             if (replaceable == true) {
                 if (text[length] == " ") {
@@ -514,13 +509,13 @@ function type(x) {
             }
         }
 
-        case "#":
+        case "#b":
         {
             text = text.slice(0, length);
             return text;
         }
 
-        case "*":
+        case "*b":
         {
             text = "";
             return text;
