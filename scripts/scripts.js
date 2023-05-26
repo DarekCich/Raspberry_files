@@ -137,7 +137,7 @@ function loadOnViewTrips(){
         if(tempIndexOfShowTrip === listOfTrips.length)
             tempIndexOfShowTrip=0
         number.innerHTML= listOfTrips[tempIndexOfShowTrip].tripId;
-        if(listOfTrips[tempIndexOfShowTrip].headsign.length>13)
+        if(listOfTrips[tempIndexOfShowTrip].headsign.length>11)
             direction.innerHTML = `<MARQUEE>${listOfTrips[tempIndexOfShowTrip].headsign}</MARQUEE>`;
         else
             direction.innerHTML = listOfTrips[tempIndexOfShowTrip].headsign
@@ -232,6 +232,7 @@ async function getZtmInfo(url,number){
     document.getElementById("loading").style.zIndex="2"
     url = url.split(" ")[0]
     url = url.toLowerCase();
+    console.log(url)
     if(url==="gdańsk")
         url="gdansk"
     await axios.get(`api/ztm/${url}/info/${number}`).then(response => {
@@ -443,9 +444,9 @@ async function autoConfig(){
                 if (resp.status) {
                     if (numberOfStation !== resp.stopIds[0]){
                         SetStationNames(resp.stopName);
-                        document.getElementById("cityName").innerHTML = resp.cityName
-                        cityName = resp.cityName;
-                        numberOfStation = resp.stopIds[0]
+                        document.getElementById("cityName").innerHTML = resp.cityName.split(" ")[0];
+                        cityName = resp.cityName.split(" ")[0];
+                        numberOfStation = resp.stopIds[0];
                         try {
                             await getResponse(`api/displays/all/${typeOfTransport}`);
                             if (typeOfTransport === "trains") {
