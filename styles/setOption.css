@@ -4,15 +4,15 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 10px;
-    height: 315px;
+    height: 310px;
     width: 470px;
     z-index: -1;
     background-color: var(--back-color);
-    border: solid var(--bordercolor) 2px;
+    /* border: solid var(--bordercolor) 2px; */
     position: absolute;
     font-size: 25px;
     max-width: 500px;
-    max-height: 340px;
+    max-height: 335px;
 }
 .row{
     display: flex;
