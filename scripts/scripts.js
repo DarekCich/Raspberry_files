@@ -34,8 +34,8 @@ function config(){
     option  = document.getElementById( "setOption");
     option.style.zIndex         = "-1"
     document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
-    axios.defaults.baseURL = 'http://localhost:8080'
-    //axios.defaults.baseURL = 'http://192.168.0.2:8080'
+    //axios.defaults.baseURL = 'http://localhost:8080'
+    axios.defaults.baseURL = 'http://192.168.0.9:8080'
 }
 async function setLogin(loginData) {
     login = loginData.username;

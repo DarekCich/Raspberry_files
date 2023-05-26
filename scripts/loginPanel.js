@@ -56,8 +56,8 @@ function log(){
     let ret = false;
     let username = document.getElementById("usernameInput").value;
     let password = document.getElementById("passwordInput").value;
-    axios.defaults.baseURL = 'http://localhost:8080'
-    //axios.defaults.baseURL = 'http://192.168.0.2:8080'
+    //axios.defaults.baseURL = 'http://localhost:8080'
+    axios.defaults.baseURL = 'http://192.168.0.9:8080'
      axios.post('api/auth/signin', {
         "username": username,
         "password": password,
