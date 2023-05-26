@@ -19,6 +19,7 @@ body{
     max-width: 500px;
     max-height: 340px;
     z-index: 1;
+
 }
 
 
@@ -83,11 +84,11 @@ input{
 }
 
 .t9-button {
-    cursor: none;
-    user-select: none; 
+    cursor:none;
+    user-select:none;
     font-size: 22px;
     padding-top: 5px;
-    height: 23%;
+    height: 55px;
     width: 32%;
     background-color: #3f3f3f;
     color: #FFF;
@@ -95,6 +96,7 @@ input{
     text-align: center;
     margin: -2px -2px;
 }
+    
 
 .t9-button {
     float: left;
