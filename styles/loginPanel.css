@@ -3,10 +3,13 @@
     --font-color: #E05E1F;
     --containercolor: #3f3f3f;
     --bordercolor: #ffffff;
+    cursor: none;
+    user-select: none; 
 }
 
 body{
-
+    cursor: none;
+    user-select: none; 
     padding-top: 5px;
     margin: 0;
     height: 330px;
@@ -34,6 +37,8 @@ body{
     min-width: 200px;
 } */
 .configButton{
+    cursor: none;
+    user-select: none; 
     width: 30%;
     height: 94%;
     border-radius: 30px;
@@ -41,6 +46,8 @@ body{
 
 }
 input{
+    cursor: none;
+    user-select: none; 
     width: 26.5%;
     height: 50px;
     margin-bottom: 5px;
@@ -50,11 +57,15 @@ input{
 
 }
 #bar{
+    cursor: none;
+    user-select: none; 
     height: 70px;
     margin-left: 10px;
     width: 480px;
 }
 #t9-input {
+    cursor: none;
+    user-select: none; 
     height: 100px;
     text-align: center;
 }
@@ -62,8 +73,9 @@ input{
 
 .t9-buttons {
     font-size: 22px;
-
-    height: 260px;
+    cursor: none;
+    user-select: none; 
+    height: 255px;
     width: 480px;
     padding-left: 10px;
     padding-bottom: 10px;
@@ -71,6 +83,8 @@ input{
 }
 
 .t9-button {
+    cursor: none;
+    user-select: none; 
     font-size: 22px;
     padding-top: 5px;
     height: 23%;
@@ -83,7 +97,6 @@ input{
 }
 
 .t9-button {
-    cursor: pointer;
     float: left;
     border: 2px solid #FFF;
     font-size: 25px;

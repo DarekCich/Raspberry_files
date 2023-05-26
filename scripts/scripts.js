@@ -309,7 +309,8 @@ async function changeTemp(number){
 //setters
 
 function setCityName(id){
-    document.getElementById("cityName").innerHTML = Responses[id]
+    cityName=Responses[id];
+    document.getElementById("cityName").innerHTML = Responses[id];
 }
 async function setCity(){
     auto=false;
@@ -342,6 +343,7 @@ async function setStation() {
          getPkpInfo(numberOfStation).then(() => {});
      }
      else{
+        console.log(Responses)
          SetStationNames(Responses[id][0])
          //console.log(Responses[id][1][0])
          numberOfStation=Responses[id][1][0];
