@@ -14,7 +14,8 @@ function createWindow () {
       width: 720,
       height: 480,
         webPreferences: {
-          devTools: true,
+          devTools: false,
+            contextIsolation: false,
             nodeIntegration: true
      }
     })
@@ -22,7 +23,6 @@ function createWindow () {
         iface: null // Możesz podać nazwę interfejsu Wi-Fi, jeśli masz więcej niż jeden
     });
     const path = require('path');
-    const fs = require('fs');
   // and load the index.html of the app
     const userDataPath = app.getPath('userData');
     const loginDataPath = path.join(userDataPath, 'loginData.json');
