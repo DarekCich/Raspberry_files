@@ -40,7 +40,10 @@
       const password = document.getElementById('passwordInput').value;
       // Wysyłanie danych do procesu głównego
       require('electron').ipcRenderer.send('loginData', { username, password });
-      window.location.href = "../pages/index.html";
+      setTimeout(() => {
+        window.location.href = "../pages/index.html";
+      }, 500);
+
     }
   }
 

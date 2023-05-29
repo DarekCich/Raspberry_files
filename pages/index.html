@@ -10,7 +10,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../scripts/scripts.js"></script>
     <script src="../scripts/static.js"></script>
-    <script src="../scripts/renderer.js"></script>
 
 </head>
 
@@ -21,7 +20,7 @@
     // Odbiór danych logowania z procesu głównego
     require('electron').ipcRenderer.on('loginDataResponse', (event, loginData) => {
         // Aktualizacja elementów HTML z otrzymanymi danymi logowania
-        console.log(loginData)
+        //console.log(loginData)
         setLogin(loginData)
     })
 </script>

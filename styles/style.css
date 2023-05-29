@@ -3,7 +3,7 @@
     --font-color: #E05E1F;
     --containercolor: #3f3f3f;
     --bordercolor: #ffffff;
-    cursor: none !important;
+    cursor: auto !important;
     user-select: none !important;
 }
 body{

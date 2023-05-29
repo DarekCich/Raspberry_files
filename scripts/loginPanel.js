@@ -1,9 +1,9 @@
-var lastTime = 0;
-var replaceable = true;
+let lastTime = 0;
+let replaceable = true;
 let name = "usernameInput";
 
 //emulate mouse press events via keyboard keypress
-document.querySelector("html").addEventListener("keydown", function(event) {
+document.querySelector("html").addEventListener("keydown", () =>{
     document.getElementById("data").innerHTML = ""
 });
 let passwordField = document.getElementById('passwordInput');
@@ -31,25 +31,13 @@ document.getElementById("passwordInput").addEventListener("click", function() {
     document.getElementById("data").innerHTML = ""
     name = "passwordInput";
 });
-
-//to add or not to add
-var buttons = document.querySelectorAll(".t9-button");
+const buttons = document.querySelectorAll(".t9-button");
 buttons.forEach(function(button) {
     button.addEventListener("click", function() {
-        var thisTime = event.timeStamp;				//determine the event timestamp
-
-        //determine whether to replace the last entered character or not
-        if ((thisTime - lastTime) > 1000) {
-            replaceable = false;
-        } else {
-            replaceable = true;
-        }
-
-        //reset lastTime value1
+        const thisTime = event.timeStamp;				//determine the event timestamp
+        replaceable = (thisTime - lastTime) <= 1000;
         lastTime = thisTime;
-
-        var newText = type(button.getAttribute("data-value"));
-        document.getElementById(name).value = newText;
+        document.getElementById(name).value = type(button.getAttribute("data-value"));
     });
 });
 function log(){
@@ -58,13 +46,13 @@ function log(){
     let password = document.getElementById("passwordInput").value;
     //axios.defaults.baseURL = 'http://localhost:8080'
     axios.defaults.baseURL = 'http://192.168.0.9:8080'
-     axios.post('api/auth/signin', {
+    axios.post('api/auth/signin', {
         "username": username,
         "password": password,
-    }).then(response => {
+    }).then(() => {
          console.log("git")
          ret = true;
-    }).catch(error => {
+    }).catch(() => {
          document.getElementById("data").innerHTML = "nie poprawne dane"
          ret = false;
      })
@@ -74,15 +62,15 @@ function log(){
 //actual typing logic
 function type(x) {
     document.getElementById("data").innerHTML = ""
-    var text = document.getElementById(name).value;
+    let text = document.getElementById(name).value;
     // console.log(replaceable);
-    var length = text.length - 1;
+    let length = text.length - 1;
     //console.log(text[length]);
 
     switch (x) {
         case "1b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "." :
                         text = text.slice(0, length) + ","
@@ -120,7 +108,7 @@ function type(x) {
         }
         case "2b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "a" :
                         text = text.slice(0, length) + "b"
@@ -166,7 +154,7 @@ function type(x) {
 
         case "3b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "d" :
                         text = text.slice(0, length) + "e"
@@ -207,11 +195,10 @@ function type(x) {
                 text = text + "d";
                 return text;
             }
-        };
-
+        }
         case "4b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "g" :
                         text = text.slice(0, length) + "h"
@@ -251,11 +238,10 @@ function type(x) {
                 text = text + "g";
                 return text;
             }
-        };
-
+        }
         case "5b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "j" :
                         text = text.slice(0, length) + "k"
@@ -296,11 +282,10 @@ function type(x) {
                 text = text + "j";
                 return text;
             }
-        };
-
+        }
         case "6b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "m" :
                         text = text.slice(0, length) + "n"
@@ -341,11 +326,10 @@ function type(x) {
                 text = text + "m";
                 return text;
             }
-        };
-
+        }
         case "7b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "p" :
                         text = text.slice(0, length) + "q"
@@ -394,11 +378,10 @@ function type(x) {
                 text = text + "p";
                 return text;
             }
-        };
-
+        }
         case "8b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "t" :
                         text = text.slice(0, length) + "u"
@@ -434,11 +417,10 @@ function type(x) {
                 text = text + "t";
                 return text;
             }
-        };
-
+        }
         case "9b":
         {
-            if (replaceable == true) {
+            if (replaceable === true) {
                 switch (text[length]){
                     case "w" :
                         text = text.slice(0, length) + "x"
@@ -482,17 +464,17 @@ function type(x) {
                 text = text + "w";
                 return text;
             }
-        };
+        }
 
         case "0b":
         {
-            if (replaceable == true) {
-                if (text[length] == " ") {
+            if (replaceable === true) {
+                if (text[length] === " ") {
                     text = text.slice(0, length) + "0";
                     return text;
                 }
 
-                else if (text[length] == "0") {
+                else if (text[length] === "0") {
                     text = text.slice(0, length) + " ";
                     return text;
                 }

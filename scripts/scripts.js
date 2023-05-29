@@ -20,11 +20,13 @@ let typeOfTransport = ""
 let listOfTrips = [];
 let auto= true;
 // on Start
-async function onstart(){
+function onstart(){
     config();
     loadColors();
+    cityName='warszawa';
+    document.getElementById("cityName").innerHTML = 'warszawa';
     typeOfTransport = "publicTransport"
-    //await setStartValue();
+
 
 }
 function config(){
@@ -38,6 +40,7 @@ function config(){
     axios.defaults.baseURL = 'http://192.168.0.9:8080'
 }
 async function setLogin(loginData) {
+    //console.log(loginData)
     login = loginData.username;
     haslo = loginData.password;
     await userSignIn(login, haslo)
@@ -56,26 +59,15 @@ async function userSignIn(username, password) {
         "password": password,
     }).then(response => {
         axios.defaults.headers.common['Authorization'] = response.headers.authorization;
-    }).catch(error => {
-        console.log(error);
-    });
-}
-async function setStartValue(){
 
-    await getResponse(`api/displays/all/${typeOfTransport}`);
-    setCityName(1)
-    await getResponse(`/api/ztm/${cityName}/displays`);
-    setStationName(0)
-    await getZtmInfo(cityName, numberOfStation);
+    }).catch(() => {
+    });
 }
 //interfejs użytkownika
 
 function moveArrivals(iter){
     indexOfShowTrip+=iter;
     loadOnViewTrips();
-}
-function show(){
-    document.getElementById("login").innerHTML = `${login} ${haslo}`;
 }
 function changeColor(){
     auto=false;
@@ -98,7 +90,6 @@ async function loadData(ListOfTrips) {
     else{
         let estimatedTime = [];
         ListOfTrips.map((trip) => {
-            // console.log( trip)
             let date = trip.estimatedTime;
             if(typeOfTransport !== "trains")
                 switch (cityName){
@@ -146,7 +137,6 @@ function loadOnViewTrips(){
 }
 
 async function loadStationOptions() {
-    //console.log(Responses)
     if(typeOfTransport === "publicTransport"){
         if(!Array.isArray(Responses)){
             Responses = Object.entries(Responses);
@@ -228,21 +218,16 @@ function loadCityOptions(){
 }
 // getters
 async function getZtmInfo(url,number){
-    //console.log(`api/ztm/${url}/info/${number}`)
     document.getElementById("loading").style.zIndex="2"
     url = url.split(" ")[0]
     url = url.toLowerCase();
-    console.log(url)
     if(url==="gdańsk")
         url="gdansk"
     await axios.get(`api/ztm/${url}/info/${number}`).then(response => {
-        //console.log(response.data);
         try {
-            //console.log(response.data.departures )
             if(response.data.departures !== undefined)
                 loadData(response.data.departures);
         } catch (e) {
-            console.log(response)
         }
 
     }).catch(() => {
@@ -251,14 +236,12 @@ async function getZtmInfo(url,number){
 }
 async function getPkpInfo(number){
 
-    //console.log(`api/ztm/${url}/info/${number}`)
     document.getElementById("loading").style.zIndex="2"
     await axios.get(`api/pkp/stops/${number}`).then(response => {
         try {
             if(response.data.departures !== undefined)
                 loadData(response.data.departures);
         } catch (e) {
-            console.log(response)
         }
     }).catch(() => {
     });
@@ -268,8 +251,7 @@ async function getPkpInfo(number){
 async function getResponse(path){
     await axios.get(path).then(response => {
         Responses = response.data;
-    }).catch(error => {
-        console.log(error);
+    }).catch(() => {
     });
 }
 //changers
@@ -343,9 +325,7 @@ async function setStation() {
          getPkpInfo(numberOfStation).then(() => {});
      }
      else{
-        console.log(Responses)
          SetStationNames(Responses[id][0])
-         //console.log(Responses[id][1][0])
          numberOfStation=Responses[id][1][0];
          getZtmInfo(cityName, numberOfStation).then(() => {});
      }
@@ -439,8 +419,7 @@ async function autoConfig(){
                 Responses = response.data.sort( ( a, b ) =>{
                     return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
                 });
-            }).catch(error => {
-                console.log(error);
+            }).catch(() => {
             });
             Responses.map(async (resp) => {
                 if (resp.status) {
@@ -484,8 +463,7 @@ async function autoConfig(){
         try{
             await axios.get(`/api/user/all/get/app/style`).then(response => {
                 Responses = response.data;
-            }).catch(error => {
-                console.log(error);
+            }).catch(() => {
             });
             if(colors.nameOfStyle !== Responses.appStyle.toString()){
                 colorSets.map((color)=>{
