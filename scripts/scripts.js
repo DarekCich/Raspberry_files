@@ -444,10 +444,24 @@ async function autoConfig(){
             });
             Responses.map(async (resp) => {
                 if (resp.status) {
-                    if (numberOfStation !== resp.stopIds[0]){
+                    if (numberOfStation !== resp.stopIds[0]) {
+                        if (resp.cityName === 'Kolej') {
+                            document.getElementById("typeOfTransport").innerHTML = "Kolej"
+                            document.getElementById("typeOfTransport").innerHTML
+                            typeOfTransport = "trains"
+                            document.getElementById("Number").innerHTML = "Peron"
+                            document.getElementById("cityDiv").style.display = "none"
+                            document.getElementById("cityLine").style.display = "none"
+                        } else {
+                            document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
+                            document.getElementById("Number").innerHTML = "Linia"
+                            typeOfTransport = "publicTransport"
+                            document.getElementById("cityDiv").style.display = "flex"
+                            document.getElementById("cityLine").style.display = "flex"
+                            document.getElementById("cityName").innerHTML = resp.cityName.split(" ")[0];
+                            cityName = resp.cityName.split(" ")[0];
+                        }
                         SetStationNames(resp.stopName);
-                        document.getElementById("cityName").innerHTML = resp.cityName.split(" ")[0];
-                        cityName = resp.cityName.split(" ")[0];
                         numberOfStation = resp.stopIds[0];
                         try {
                             await getResponse(`api/displays/all/${typeOfTransport}`);
@@ -462,7 +476,6 @@ async function autoConfig(){
 
                         }
                     }
-
                 }
             })
         }catch{
