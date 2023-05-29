@@ -24,7 +24,7 @@ function onstart(){
     config();
     loadColors();
     cityName='warszawa';
-    document.getElementById("cityName").innerHTML = 'warszawa';
+    document.getElementById("cityName").innerHTML = 'Warszawa';
     typeOfTransport = "publicTransport"
 
 
