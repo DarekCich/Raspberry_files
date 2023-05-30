@@ -34,15 +34,16 @@
 </div>
 
 <script>
-  function submitForm() {
-    if(log){
+  async function submitForm() {
+    let x = await log()
+    if(x){
       const username = document.getElementById('usernameInput').value;
       const password = document.getElementById('passwordInput').value;
       // Wysyłanie danych do procesu głównego
       require('electron').ipcRenderer.send('loginData', { username, password });
       setTimeout(() => {
         window.location.href = "../pages/index.html";
-      }, 500);
+      }, 2000);
 
     }
   }

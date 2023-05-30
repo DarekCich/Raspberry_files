@@ -40,23 +40,26 @@ buttons.forEach(function(button) {
         document.getElementById(name).value = type(button.getAttribute("data-value"));
     });
 });
-function log(){
+async function log(){
+    let x;
     let ret = false;
     let username = document.getElementById("usernameInput").value;
     let password = document.getElementById("passwordInput").value;
-    //axios.defaults.baseURL = 'http://localhost:8080'
-    axios.defaults.baseURL = 'http://192.168.0.9:8080'
-    axios.post('api/auth/signin', {
+    axios.defaults.baseURL = 'http://localhost:8080'
+    //axios.defaults.baseURL = 'http://192.168.0.9:8080'
+    await axios.post('api/auth/signin', {
         "username": username,
         "password": password,
-    }).then(() => {
-         console.log("git")
-         ret = true;
-    }).catch(() => {
+    }).then((resp) => {
+        console.log(resp);
+        ret = true;
+    }).catch((er) => {
+        console.log(er);
          document.getElementById("data").innerHTML = "nie poprawne dane"
          ret = false;
      })
-    return ret
+
+    return ret;
 }
 
 //actual typing logic
