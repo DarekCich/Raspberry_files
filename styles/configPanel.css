@@ -5,20 +5,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    border-radius: 10px;
-    z-index: -1;
+
     background-color: var(--back-color);
-    border: solid var(--bordercolor) 2px;
+    font-size: 10vh;
+    margin-bottom: 2px;
+    height: 98%;
+    width: 90vw;
+
+
+}
+#backConfigPanel{
+    display: flex;
+    justify-content: center;
+    bottom: 0;
+    z-index: -1;
     position: absolute;
-    font-size: 25px;
-    left: 16px;
-    top: 80px;
-    max-width: 500px;
-    max-height: 320px;
-    height: 230px;
-    width: 445px;
-
-
+    height: 75%;
+    width: 100%;
 }
 #changeColor{
     display: flex;
@@ -39,6 +42,7 @@ select{
     background-color: #8c1a1a
 }
 .configButton{
+    font-size: 5vh;
     cursor: none;
     user-select: none; 
     width: 40%;
@@ -51,19 +55,22 @@ select{
     display: flex;
 }
 .NameOfOption{
-    width: 200px;
+    width: 75vw;
     display: flex;
     align-items: center;
     justify-items: center;
     text-align: center;
 }
 .backColor{
+    border-radius: 10px;
+    padding: 0 10px;
     background-color: var(--containercolor);
     cursor: none;
-    user-select: none; 
-    height: 250px;
-    width: 445px;
+    user-select: none;
+    height: 98%;
+    width: 100%;
     display: flex;
+    border: solid var(--bordercolor) 2px;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;

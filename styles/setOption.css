@@ -4,17 +4,17 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 10px;
-    height: 310px;
-    width: 470px;
+    height: 98vh;
+    width: 98vw;
     z-index: -1;
     background-color: var(--back-color);
     /* border: solid var(--bordercolor) 2px; */
     position: absolute;
-    font-size: 25px;
-    max-width: 500px;
-    max-height: 335px;
+    font-size: 12vh;
 }
 .row{
+    overflow: hidden;
+    white-space: nowrap;
     display: flex;
     height: 20%;
     background-color: var(--containercolor);
@@ -27,9 +27,10 @@
     border-radius: 8px;
 }
 #setOption .configButton{
+    border: solid var(--bordercolor) 1px;
     color: var(--font-color);
     background-color: var(--containercolor);
-    font-size: 20px;
+    font-size: 12vh;
     height: 15%;
     width: 90%;
 }

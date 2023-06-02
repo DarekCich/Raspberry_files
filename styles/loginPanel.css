@@ -12,12 +12,10 @@ body{
     user-select: none; 
     padding-top: 5px;
     margin: 0;
-    height: 330px;
-    width: 480px;
+    height: 100vh;
+    width: 100vw;
     background-color: var(--back-color);
     overflow: hidden;
-    max-width: 500px;
-    max-height: 340px;
     z-index: 1;
 
 }
@@ -40,34 +38,36 @@ body{
 .configButton{
     cursor: none;
     user-select: none; 
-    width: 30%;
+    width: 32%;
     height: 94%;
     border-radius: 30px;
-    font-size: 22px;
+    font-size: 10vh;
 
 }
 #data{
-    margin-left: 10px;
-    margin-bottom: 10px;
+
+    padding: 1vh 2vw;
+    background-color: var(--back-color);
     color: #e8eef7;
 }
 input{
     cursor: none;
-    user-select: none; 
-    width: 26.5%;
-    height: 50px;
-    margin-bottom: 5px;
+    user-select: none;
+    padding: 5px 15px;
+    height: 80%;
+    margin: 0 5px;
     border-radius: 30px;
-    padding: 5px 10px;
-    font-size: 22px;
-
+    font-size: 10vh ;
+    width: 31%;
 }
 #bar{
     cursor: none;
-    user-select: none; 
-    height: 70px;
-    margin-left: 10px;
-    width: 480px;
+    user-select: none;
+    padding: 5px 5px;
+    display: flex;
+    height: 18vh;
+    width: 99.5vw;
+    background-color: var(--back-color);
 }
 #t9-input {
     cursor: none;
@@ -78,11 +78,11 @@ input{
 
 
 .t9-buttons {
-    font-size: 22px;
+    font-size: 9vh ;
     cursor: none;
     user-select: none; 
-    height: 255px;
-    width: 480px;
+    height: 80vh;
+    width: 100vw;
     padding-left: 10px;
     padding-bottom: 10px;
     background-color: var(--back-color);
@@ -91,10 +91,9 @@ input{
 .t9-button {
     cursor:none;
     user-select:none;
-    font-size: 22px;
     padding-top: 5px;
-    height: 55px;
-    width: 32%;
+    height: 18vh;
+    width: 33%;
     background-color: #3f3f3f;
     color: #FFF;
     display: inline-block;
@@ -106,7 +105,7 @@ input{
 .t9-button {
     float: left;
     border: 2px solid #FFF;
-    font-size: 25px;
+    font-size: 9vh ;
     color: white;
     font-weight: bold;
     font-family: "Consolas";
@@ -117,9 +116,10 @@ input{
 }
 
 .t9-button-text {
+    margin-top: -2vh;
     color: #d7d7d7;
     display: block;
-    font-size: 20px;
+    font-size: 7vh ;
     text-align: center;
 }
 

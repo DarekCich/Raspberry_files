@@ -13,7 +13,7 @@
 
 </head>
 
-<body onload="onstart()">
+<body >
 <script>
     require('electron').ipcRenderer.send('loginDataRequest');
 
@@ -24,6 +24,7 @@
         setLogin(loginData)
     })
 </script>
+<div id="backConfigPanel">
     <div id="configPanel" >
         <div class="backColor">
             <div class="configOption">
@@ -51,6 +52,8 @@
             </div >
         </div>
     </div>
+</div>
+
     <div id="setOption">
         <button class="configButton" onclick="changeTemp(-1)">&#8593</button>
         <div id="firstRow"  class="row"  onclick="setOption(id)" > firstRow  </div>

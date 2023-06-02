@@ -1,5 +1,7 @@
 let table ;
 let option;
+let optionBack;
+let SetBack;
 let colors;
 let login = ""
 let haslo = ""
@@ -18,7 +20,7 @@ let cityName= ""
 let mode    = "";
 let typeOfTransport = ""
 let listOfTrips = [];
-let auto= true;
+let auto= false;
 // on Start
 function onstart(){
     config();
@@ -36,8 +38,7 @@ function config(){
     option  = document.getElementById( "setOption");
     option.style.zIndex         = "-1"
     document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
-    axios.defaults.baseURL = 'http://localhost:8080'
-    //axios.defaults.baseURL = 'http://192.168.0.9:8080'
+
 }
 async function setLogin(loginData) {
     //console.log(loginData)
@@ -54,12 +55,14 @@ function loadColors(){
     changeColor();
 }
 async function userSignIn(username, password) {
+    axios.defaults.baseURL = 'http://localhost:8080'
+    //axios.defaults.baseURL = 'http://192.168.0.9:8080'
     await axios.post('api/auth/signin', {
         "username": username,
         "password": password,
     }).then(response => {
         axios.defaults.headers.common['Authorization'] = response.headers.authorization;
-
+        onstart();
     }).catch(() => {
     });
 }
@@ -376,7 +379,10 @@ function estimatedTime(){
    let date  =  new Date()
    while (true){
        let part = listOfTrips[0].estimatedTime.split(":")
-       if(part[1]>=date.getMinutes()){
+       if(part[0] > date.getHours().toString()){
+           break;
+       }
+       if(part[1]>=date.getMinutes().toString()){
            break;
        }
        listOfTrips.splice(0,1)
@@ -385,7 +391,7 @@ function estimatedTime(){
    if(temp)
         loadOnViewTrips()
 }
-setInterval(estimatedTime,30000)
+setInterval(estimatedTime,3000)
 
 class SetColor {
     constructor(back, font,container,border ,name) {
@@ -408,7 +414,7 @@ function onUpTime(){
 }
 
 function timeClick() {
-    document.getElementById("configPanel").style.zIndex==="5" ? document.getElementById("configPanel").style.zIndex="-1" :  document.getElementById("configPanel").style.zIndex="5";
+    document.getElementById("backConfigPanel").style.zIndex==="5" ? document.getElementById("backConfigPanel").style.zIndex="-1" :  document.getElementById("backConfigPanel").style.zIndex="5";
 }
 async function autoConfig(){
     if(auto){
