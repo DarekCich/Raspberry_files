@@ -1,0 +1,8 @@
+body{
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100vh;
+}
+.alarmBar{
+    justify-content: center !important;
+}

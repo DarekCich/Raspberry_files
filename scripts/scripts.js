@@ -416,7 +416,7 @@ function onDownTime(){
 function onUpTime(){
     timeUp =  Date.now() - timeDown;
     if(timeUp >= 2000 && timeUp<=5000) auto=true
-    else if (timeUp>5000) window.location.href = "../pages/loginPanel.html";
+    else if (timeUp>5000) window.location.href = "../pages/adminPanel.html";
     else timeClick();
 }
 

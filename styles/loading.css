@@ -1,15 +1,24 @@
-.sk-fading-circle {
-    width: 40px;
-    height: 40px;
+#loading{
+    display: flex;
     position: absolute;
-    z-index: -1;
-    padding: 50px;
-    margin: 80px auto 100px 150px;
+    z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-items: center;
+}
+
+.sk-fading-circle {
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    left: 36.5%;
+    top: 10%
 }
 
 .sk-fading-circle .sk-circle {
-    width: 100%;
-    height: 100%;
+    width: 38%;
+    height: 75%;
     position: absolute;
     left: 0;
     top: 0;
