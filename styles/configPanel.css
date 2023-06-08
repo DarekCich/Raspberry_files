@@ -55,6 +55,7 @@ select{
     display: flex;
 }
 .NameOfOption{
+    white-space: nowrap;
     width: 75vw;
     display: flex;
     align-items: center;
