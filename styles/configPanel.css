@@ -9,7 +9,7 @@
     background-color: var(--back-color);
     font-size: 10vh;
     margin-bottom: 2px;
-    height: 98%;
+    height: 100%;
     width: 90vw;
 
 
@@ -20,7 +20,7 @@
     bottom: 0;
     z-index: -1;
     position: absolute;
-    height: 75%;
+    height: 82%;
     width: 100%;
 }
 #changeColor{
@@ -45,13 +45,13 @@ select{
     font-size: 5vh;
     cursor: none;
     user-select: none; 
-    width: 40%;
+    width: 55%;
     height: 100%;
     border-radius: 30px;
 }
 .configOption{
     height: 20%;
-    width: 90%;
+    width: 98%;
     display: flex;
 }
 .NameOfOption{
@@ -74,4 +74,10 @@ select{
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+hr{
+    width: 95%;
+    height: 0;
+    margin: 0;
+    border: solid var(--bordercolor) 1px;
 }

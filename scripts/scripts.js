@@ -55,7 +55,8 @@ function loadColors(){
     changeColor();
 }
 async function userSignIn(username, password) {
-    axios.defaults.baseURL = 'http://localhost:8080'
+    //axios.defaults.baseURL = 'http://localhost:8080'
+    axios.defaults.baseURL = 'http://192.168.140.156:8080'
     //axios.defaults.baseURL = 'http://192.168.0.9:8080'
     await axios.post('api/auth/signin', {
         "username": username,
