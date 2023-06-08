@@ -6,6 +6,15 @@
     cursor: auto !important;
     user-select: none !important;
 }
+@font-face {
+    font-family:clockicons;
+    src:url(/font/clockicons/clockicons.eot#iefix) format('embedded-opentype'),
+    url(../font/clockicons/clockicons.woff2) format('woff2'),
+    url(../font/clockicons/clockicons.woff) format('woff'),
+    url(../font/clockicons/clockicons.ttf) format('truetype');
+    font-weight:400;
+    font-style:normal
+}
 body{
     padding-top: 5px;
     color: var(--font-color);
@@ -56,6 +65,7 @@ body{
 }
 
 #Time{
+    font-family: clockicons, serif;
     justify-content: center;
     align-items: center;
     display: flex;
