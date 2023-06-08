@@ -39,7 +39,7 @@ body{
     cursor: none;
     user-select: none; 
     width: 32%;
-    height: 94%;
+    height: 100%;
     border-radius: 30px;
     font-size: 10vh;
 
@@ -53,12 +53,12 @@ body{
 input{
     cursor: none;
     user-select: none;
-    padding: 5px 15px;
+    padding: 5px 0 5px 15px;
     height: 80%;
-    margin: 0 5px;
+    margin: 0 0.4vw 0 0;
     border-radius: 30px;
     font-size: 10vh ;
-    width: 31%;
+    width: 32%;
 }
 #bar{
     cursor: none;
@@ -66,7 +66,7 @@ input{
     padding: 5px 5px;
     display: flex;
     height: 15vh;
-    width: 99.5vw;
+    width: 98.5vw;
     background-color: var(--back-color);
 }
 #t9-input {
@@ -93,7 +93,7 @@ input{
     user-select:none;
     padding-top: 5px;
     height: 18vh;
-    width: 33%;
+    width: 32.5%;
     background-color: #3f3f3f;
     color: #FFF;
     display: inline-block;
