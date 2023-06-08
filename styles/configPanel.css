@@ -42,6 +42,7 @@ select{
     background-color: #8c1a1a
 }
 .configButton{
+    font-weight: bold;
     font-size: 5vh;
     cursor: none;
     user-select: none; 
