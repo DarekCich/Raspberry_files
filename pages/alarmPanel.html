@@ -11,8 +11,8 @@
 </head>
 <body>
 <div class="Bar">
-    <div class="info border alarmBar" onmousedown="onDownTime()" onmouseup="onUpTime()" >
-        <a href="adminPanel.html"> <div class="back border"> Powrót     </div> </a>
+    <div class="info border alarmBar" >
+        <div class="back border" onclick="home()"> Powrót</div>
         <div id="Time" ></div>
     </div>
 
@@ -22,4 +22,10 @@
     <div class="admin border"> Alarm2  </div>
     <div class="admin border"> Alarm3   </div>
 </body>
+<script>
+    function home(){
+        window.location.href = "../pages/adminPanel.html"
+    }
+
+</script>
 </html>

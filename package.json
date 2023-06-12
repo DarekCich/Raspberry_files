@@ -1,6 +1,6 @@
 {
-  "name": "mtip",
-  "version": "1.0.0",
+  "name": "mtipv2",
+  "version": "2.0.0",
   "description": "MTIP on Raspberry pi",
   "main": "scripts/main.js",
   "scripts": {

@@ -8,9 +8,24 @@
 
 </head>
 <body>
-    <a href="index.html"        > <div class="admin border"> Ekran Główny         </div> </a>
-    <a href="internetPanel.html"> <div class="admin border"> Wybór Sieci Wifi     </div> </a>
-    <a href="alarmPanel.html"   > <div class="admin border"> Ustawienia Budzika   </div> </a>
-    <a href="loginPanel.html"   > <div class="admin border"> Zmiana Użytkownika   </div> </a>
+    <div class="admin border" onclick="home() " > Ekran Główny         </div>
+    <div class="admin border" onclick="wifi() " > Wybór Sieci Wifi     </div>
+    <div class="admin border" onclick="alarm()" > Ustawienia Budzika   </div>
+    <div class="admin border" onclick="user() " > Zmiana Użytkownika   </div>
 </body>
+<script>
+    function home(){
+        window.location.href = "../pages/index.html"
+    }
+    function wifi(){
+        window.location.href = "../pages/internetPanel.html"
+    }
+    function alarm(){
+        window.location.href = "../pages/alarmPanel.html"
+    }
+    function user(){
+        window.location.href = "../pages/loginPanel.html"
+    }
+
+</script>
 </html>
