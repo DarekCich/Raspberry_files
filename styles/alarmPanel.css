@@ -1,7 +1,14 @@
+:root{
+    cursor: none !important;
+    user-select: none !important;
+}
 body{
     display: flex !important;
     flex-direction: column !important;
     height: 100vh;
+}
+.Bar .info {
+    width: 92vw;
 }
 .alarmBar{
     justify-content: center !important;
@@ -9,12 +16,12 @@ body{
     margin: 1vh;
 }
 span{
-    height: 2%;
+    height: 3vh;
 }
 .back{
-    margin: 1%;
+    margin: 1vh 1vw;
     height: 80%;
-    width: 40%;
+    width: 50%;
     align-items: center;
     text-align: center;
     justify-items: center;

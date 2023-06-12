@@ -1,3 +1,7 @@
+:root{
+    cursor: none !important;
+    user-select: none !important;
+}
 #configPanel{
     cursor: none;
     user-select: none; 
