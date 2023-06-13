@@ -1,10 +1,8 @@
 :root{
-    cursor: none !important;
-    user-select: none !important;
+
 }
 #configPanel{
-    cursor: none;
-    user-select: none; 
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,8 +46,7 @@ select{
 .configButton{
     font-weight: bold;
     font-size: 5vh;
-    cursor: none;
-    user-select: none; 
+
     width: 55%;
     height: 100%;
     border-radius: 30px;
@@ -71,8 +68,7 @@ select{
     border-radius: 10px;
     padding: 0 10px;
     background-color: var(--containercolor);
-    cursor: none;
-    user-select: none;
+
     height: 98%;
     width: 100%;
     display: flex;

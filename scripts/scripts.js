@@ -1,7 +1,5 @@
 let table ;
 let option;
-let optionBack;
-let SetBack;
 let colors;
 let login = ""
 let haslo = ""
@@ -386,10 +384,11 @@ function estimatedTime(){
    let date  =  new Date()
    while (true){
        let part = listOfTrips[0].estimatedTime.split(":")
-       if(part[0] > date.getHours().toString()){
+       console.log(part)
+       if(parseInt(part[0])> date.getHours()){
            break;
        }
-       if(part[1]>=date.getMinutes().toString()){
+       if(parseInt(part[1])>date.getMinutes().toString()){
            break;
        }
        listOfTrips.splice(0,1)
