@@ -384,7 +384,6 @@ function estimatedTime(){
    let date  =  new Date()
    while (true){
        let part = listOfTrips[0].estimatedTime.split(":")
-       console.log(part)
        if(parseInt(part[0])> date.getHours()){
            break;
        }

@@ -42,7 +42,7 @@ body{
 .Bar{
     display: flex;
     width: 100%;
-    height: 18%;
+    height: 20%;
     justify-content: center;
     background-color: var(--back-color);
 }
@@ -67,9 +67,11 @@ body{
     width: 90vw;
 
 }
+#stop{
+    margin-top: -20px;
+}
 .Stop{
-    position: relative;
-    z-index: 1;
+
     height: 82%;
     width: 100%;
     overflow: hidden;
@@ -111,7 +113,11 @@ tr{
 span{
     width: 8vw;
 }
+.estimatedTime{
+    font-family: clockicons, serif;
+    font-weight: normal;
 
+}
 .marq{
     text-align: center;
     align-items: center;
@@ -121,6 +127,7 @@ span{
     font-size: 12vh;
 }
 #StationName{
+    margin-top: -15px;
     justify-content: center;
     align-items: center;
     display: flex;
