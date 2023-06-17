@@ -388,7 +388,7 @@ function estimatedTime(){
        if(parseInt(part[0])> date.getHours()){
            break;
        }
-       if(parseInt(part[1])>date.getMinutes().toString()){
+       if(parseInt(part[1])>date.getMinutes()){
            break;
        }
        listOfTrips.splice(0,1)
