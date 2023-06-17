@@ -28,6 +28,9 @@ body{
     overflow: hidden;
     font-weight: bold;
 }
+.alarm{
+    justify-content: space-around !important;
+}
 .Bar{
     display: flex;
     width: 100%;

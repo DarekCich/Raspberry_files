@@ -14,6 +14,23 @@ body{
     height: 18vh;
     margin: 1vh;
 }
+.timeContainer{
+
+    display: flex;
+    align-items: center;
+}
+.timeSetter{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 12vh;
+    width: 14vh;
+    background-color: #535353;
+    border: none;
+    border-radius: 1vh;
+}
 span{
     height: 3vh;
 }
@@ -28,4 +45,17 @@ span{
     align-self: center;
     display: flex;
     font-size: 7vh;
+}
+.ActiveButton{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 18vh;
+    height: 18vh;
+    border-radius: 1vh;
+    font-size: 12vh;
+    display: flex;
+    justify-content: center;
 }
