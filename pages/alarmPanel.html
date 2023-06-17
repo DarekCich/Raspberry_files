@@ -21,27 +21,28 @@
 <span></span>
     <div class="admin border alarm">
         <div  class="timeContainer">
-            <button onclick="setTime('hour1',1)">
-                ^
+            <button  class="ActiveButton" onclick="setTime('hour1',1)">
+                ⇑
             </button>
             <label>
                 <input id="hour1" class="timeSetter" type="text" inputmode="numeric" pattern="[0-9]*"
                        oninput="this.value = Math.min(Math.max(parseInt(this.value || 0), 0), 24)">
             </label>
-            <button onclick="setTime('hour1',-1)">
-                V
+            <button  class="ActiveButton" onclick="setTime('hour1',-1)">
+                ⇓
             </button>
         </div>
+        :
         <div  class="timeContainer">
-            <button onclick="setTime('minutes1',1)">
-                ^
+            <button  class="ActiveButton" onclick="setTime('minutes1',1)">
+                ⇑
             </button>
             <label>
                 <input id="minutes1" class="timeSetter" type="text" inputmode="numeric" pattern="[0-9]*"
                        oninput="this.value = Math.min(Math.max(parseInt(this.value || 0), 0), 24)">
             </label>
-            <button onclick="setTime('minutes1',-1)">
-                V
+            <button  class="ActiveButton" onclick="setTime('minutes1',-1)">
+                ⇓
             </button>
         </div>
         <button class="ActiveButton" id="but1" onclick="changeStat('but1')">
@@ -50,27 +51,28 @@
     </div>
 <div class="admin border alarm">
     <div  class="timeContainer">
-        <button onclick="setTime('hour2',1)">
-            ^
+        <button  class="ActiveButton" onclick="setTime('hour2',1)">
+            ⇑
         </button>
         <label>
             <input id="hour2" class="timeSetter" type="text" inputmode="numeric" pattern="[0-9]*"
                    oninput="this.value = Math.min(Math.max(parseInt(this.value || 0), 0), 24)">
         </label>
-        <button onclick="setTime('hour2',-1)">
-            V
+        <button  class="ActiveButton" onclick="setTime('hour2',-1)">
+            ⇓
         </button>
     </div>
+    :
     <div  class="timeContainer">
-        <button onclick="setTime('minutes2',1)">
-            ^
+        <button  class="ActiveButton" onclick="setTime('minutes2',1)">
+            ⇑
         </button>
         <label>
             <input id="minutes2" class="timeSetter" type="text" inputmode="numeric" pattern="[0-9]*"
                    oninput="this.value = Math.min(Math.max(parseInt(this.value || 0), 0), 24)">
         </label>
-        <button onclick="setTime('minutes2',-1)">
-            V
+        <button  class="ActiveButton" onclick="setTime('minutes2',-1)">
+            ⇓
         </button>
     </div>
     <button class="ActiveButton" id="but2" onclick="changeStat('but2')">
@@ -79,27 +81,28 @@
 </div>
 <div class="admin border alarm">
     <div  class="timeContainer">
-        <button onclick="setTime('hour3',1)">
-            ^
+        <button class="ActiveButton" onclick="setTime('hour3',1)">
+            ⇑
         </button>
         <label>
             <input id="hour3" class="timeSetter" type="text" inputmode="numeric" pattern="[0-9]*"
                    oninput="this.value = Math.min(Math.max(parseInt(this.value || 0), 0), 24)">
         </label>
-        <button onclick="setTime('hour3',-1)">
-            V
+        <button class="ActiveButton" onclick="setTime('hour3',-1)">
+            ⇓
         </button>
     </div>
+    :
     <div  class="timeContainer">
-        <button onclick="setTime('minutes3',1)">
-            ^
+        <button class="ActiveButton" onclick="setTime('minutes3',1)">
+            ⇑
         </button>
         <label>
             <input id="minutes3" class="timeSetter" type="text" inputmode="numeric" pattern="[0-9]*"
                    oninput="this.value = Math.min(Math.max(parseInt(this.value || 0), 0), 24)">
         </label>
-        <button onclick="setTime('minutes3',-1)">
-            V
+        <button class="ActiveButton" onclick="setTime('minutes3',-1)">
+            ⇓
         </button>
     </div>
     <button class="ActiveButton" id="but3" onclick="changeStat('but3')">
@@ -117,6 +120,18 @@
             if (document.getElementById(`but${i}`).innerHTML)
                 document.getElementById(`but${i}`).innerHTML='on'
         }
+        fetch('../alarms.json')
+            .then(response => response.json())
+            .then(data => {
+                for(let i = 1 ; i<=3; i++){
+                    document.getElementById(`hour${i}`).value=data[i-1].hour;
+                    document.getElementById(`minutes${i}`).value=data[i-1].minute;
+                    document.getElementById(`but${i}`).innerHTML= data[i-1].on ?  "on" : "off";
+                }
+            })
+            .catch(error => {
+                console.error('Błąd odczytu pliku alarms.json:', error);
+            });
     }
     function home(){
         window.location.href = "../pages/adminPanel.html"

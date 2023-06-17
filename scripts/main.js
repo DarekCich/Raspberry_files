@@ -30,7 +30,7 @@ function createWindow () {
         if (error) {
             console.log(error);
         } else {
-            if (currentConnections.length > 0) {
+            if (currentConnections.length >= 0) {
                 try {
                     if (fs.existsSync(loginDataPath)) {
 
@@ -112,7 +112,7 @@ function createWindow () {
 
     });
     ipcMain.on('alarm', (event, data) => {
-        fs.writeFileSync("./alarms", JSON.stringify(data));
+        fs.writeFileSync("./alarms.json", JSON.stringify(data));
     })
 
     mainWindow.on('closed', function () {

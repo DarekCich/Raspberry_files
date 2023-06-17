@@ -18,6 +18,7 @@ body{
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .timeSetter{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -30,6 +31,7 @@ body{
     background-color: #535353;
     border: none;
     border-radius: 1vh;
+    margin: 0 2vw ;
 }
 span{
     height: 3vh;

@@ -3,18 +3,29 @@ function setTime(id, val){
     if(!time.value)
         time.value = 0;
     time.value = parseInt(time.value) + val;
-    if(id[0]==='h')
-        time.value = Math.min(Math.max(parseInt(time.value || 0), 0), 23)
-    else
-        time.value = Math.min(Math.max(parseInt(time.value || 0), 0), 59)
+    if(id[0]==='h'){
+        if(parseInt(time.value)>23)
+            time.value=0
+        else if (parseInt(time.value)<0)
+            time.value=23
+    }
+    else{
+        if(parseInt(time.value)>59)
+            time.value=0
+        else if (parseInt(time.value)<0)
+            time.value=59
+    }
 }
 function getTimes(){
     let tab = [];
     for(let i = 1 ; i<=3; i++){
+        let t = true
+        if (document.getElementById(`but${i}`).innerHTML==='off')
+            t = false
         let x = {
             hour: document.getElementById(`hour${i}`).value,
             minute: document.getElementById(`minutes${i}`).value,
-            on: document.getElementById(`minutes${i}`).value
+            on: t
         }
         tab.push(x)
     }

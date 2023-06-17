@@ -128,4 +128,4 @@ dist
 /raspberry/
 /node_modules/
 /.idea/
-/alarms
+/alarms.json
