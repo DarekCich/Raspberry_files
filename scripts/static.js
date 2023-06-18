@@ -17,12 +17,13 @@ function clock(){
 }
 setInterval(clock,500)
 function alarmOn() {
+    let tabAlarms = [];
     fetch('../alarms.json')
         .then(response => response.json())
         .then(data => {
             if (Array.isArray(data)) {
                 data.forEach(alarm => {
-                    ifAlarm(alarm);
+                    tabAlarms.push(alarm)
                 });
             } else {
                 console.error('Błąd: "alarms.json" nie jest tablicą JSON.');
@@ -32,63 +33,35 @@ function alarmOn() {
             console.error('Błąd odczytu pliku alarms.json:', error);
         });
     setInterval(() => {
-        fetch('../alarms.json')
-            .then(response => response.json())
-            .then(data => {
-                if (Array.isArray(data)) {
-                    data.forEach(alarm => {
-                        ifAlarm(alarm);
-                    });
-                } else {
-                    console.error('Błąd: "alarms.json" nie jest tablicą JSON.');
-                }
-            })
-            .catch(error => {
-                console.error('Błąd odczytu pliku alarms.json:', error);
-            });
-
-
-    }, 25000); // Co 60 000 milisekund (1 minuta)
+        tabAlarms.forEach(alarm => {
+            ifAlarm(alarm);
+        })
+    }, 1000); // Co 60 000 milisekund (1 minuta)
 }
 function ifAlarm(alarm){
     if(alarm.on){
         const now = new Date();
         const currentHour = now.getHours();
         const currentMinute = now.getMinutes();
-        if(czyNieByloAlarmu){
-            if(currentHour === parseInt(alarm.hour))
-                if (currentMinute === parseInt(alarm.minute)){
+        if(currentHour === parseInt(alarm.hour)){
+            if (currentMinute === parseInt(alarm.minute)){
+                if(czyNieByloAlarmu){
+                    czyNieByloAlarmu = !czyNieByloAlarmu
                     showAlarm()
+                    setTimeout(()=>{czyNieByloAlarmu = !czyNieByloAlarmu},60000)
                 }
-        }
-        else{
-            czyNieByloAlarmu = true;
+            }
         }
     }
 }
 function showAlarm(){
-    console.log("git")
     let x =document.getElementById("alarm")
     x.style.zIndex="7"
-    x.style.background="red"
-    setTimeout(() => {
-        x.style.background = "yellow"
-    }, 500)
-    setTimeout(()=>{
-        x.style.background = "blue"
-    },1000)
-    setTimeout(() => {
-        x.style.background = "red"
-    }, 1500)
-    setTimeout(() => {
-        x.style.background = "yellow"
-    }, 2000)
-    setTimeout(() => {
-        x.style.background = "blue"
-    }, 2500)
-    setTimeout(()=>{
-        x.style.zIndex="-1"
-    },3000)
-
+    x.classList.toggle('element')
+}
+function offAlarm(){
+    let x =document.getElementById("alarm")
+    x.style.zIndex='-1'
+    x.classList.toggle('element')
 }
 alarmOn();

@@ -140,6 +140,10 @@ span{
 .number{
     min-width: 18vh;
 }
-
+@keyframes redBackground {
+    0% {     background-color: red;     opacity: 0.35;   }
+    50% {     opacity: 0.80;   }
+    100% {     background-color: red;     opacity: 0.35;   } }
+.element {   animation: redBackground 2s infinite; }
 
 
