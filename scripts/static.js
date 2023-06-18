@@ -1,3 +1,4 @@
+let czyNieByloAlarmu = true
 function clock(){
     let date   =  new Date()
     let hours = String(date.getHours());
@@ -47,17 +48,22 @@ function alarmOn() {
             });
 
 
-    }, 60000); // Co 60 000 milisekund (1 minuta)
+    }, 25000); // Co 60 000 milisekund (1 minuta)
 }
 function ifAlarm(alarm){
     if(alarm.on){
         const now = new Date();
         const currentHour = now.getHours();
         const currentMinute = now.getMinutes();
-
-        if(currentHour === parseInt(alarm.hour))
-            if (currentMinute === parseInt(alarm.minute))
-                showAlarm()
+        if(czyNieByloAlarmu){
+            if(currentHour === parseInt(alarm.hour))
+                if (currentMinute === parseInt(alarm.minute)){
+                    showAlarm()
+                }
+        }
+        else{
+            czyNieByloAlarmu = true;
+        }
     }
 }
 function showAlarm(){
