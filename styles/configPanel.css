@@ -1,5 +1,6 @@
 :root{
-
+    cursor: none !important;
+    user-select: none !important;
 }
 #configPanel{
 
@@ -44,6 +45,8 @@ select{
     background-color: #8c1a1a
 }
 .configButton{
+    cursor: none !important;
+    user-select: none !important;
     font-weight: bold;
     font-size: 5vh;
 

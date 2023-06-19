@@ -1,26 +1,40 @@
 :root{
-
+    cursor: none !important;
+    user-select: none !important;
+}
+label{
+    cursor: none !important;
+    user-select: none !important;
 }
 body{
+    cursor: none !important;
+    user-select: none !important;
     display: flex !important;
     flex-direction: column !important;
     height: 100vh;
 }
 .Bar .info {
+    cursor: none !important;
+    user-select: none !important;
     width: 92vw;
 }
 .alarmBar{
+    cursor: none !important;
+    user-select: none !important;
     justify-content: center !important;
     height: 18vh;
     margin: 1vh;
 }
 .timeContainer{
-
+    cursor: none !important;
+    user-select: none !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .timeSetter{
+    cursor: none !important;
+    user-select: none !important;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -34,9 +48,13 @@ body{
     margin: 0 2vw ;
 }
 span{
+    cursor: none !important;
+    user-select: none !important;
     height: 3vh;
 }
 .back{
+    cursor: none !important;
+    user-select: none !important;
     margin: 1vh 1vw;
     height: 80%;
     width: 50%;
@@ -49,6 +67,8 @@ span{
     font-size: 7vh;
 }
 .ActiveButton{
+    cursor: none !important;
+    user-select: none !important;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
