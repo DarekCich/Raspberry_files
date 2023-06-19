@@ -1,7 +1,5 @@
 let table ;
 let option;
-let optionBack;
-let SetBack;
 let colors;
 let login = ""
 let haslo = ""
@@ -247,9 +245,11 @@ async function getZtmInfo(url,number){
 async function getPkpInfo(number){
 
     document.getElementById("loading").style.zIndex="2"
+    //console.log(`api/pkp/stops/${number}`)
     await axios.get(`api/pkp/stops/${number}`).then(response => {
         try {
             if(response.data.departures !== undefined)
+                //console.log(response)
                 loadData(response.data.departures);
         } catch (e) {
         }
@@ -380,16 +380,21 @@ function SetStationNames(name){
 function estimatedTime(){
     let temp = false
    if(listOfTrips.length<5){
-       getZtmInfo(cityName, numberOfStation).then(() => {});
-       return;
+       if (typeOfTransport === "trains") {
+           getPkpInfo(numberOfStation).then(() => {
+           });
+       } else {
+           getZtmInfo(cityName, numberOfStation).then(() => {
+           });
+       }
    }
    let date  =  new Date()
    while (true){
        let part = listOfTrips[0].estimatedTime.split(":")
-       if(part[0] > date.getHours().toString()){
+       if(parseInt(part[0])> date.getHours()){
            break;
        }
-       if(part[1]>=date.getMinutes().toString()){
+       if(parseInt(part[1])>date.getMinutes()){
            break;
        }
        listOfTrips.splice(0,1)
@@ -398,7 +403,7 @@ function estimatedTime(){
    if(temp)
         loadOnViewTrips()
 }
-setInterval(estimatedTime,3000)
+setInterval(estimatedTime,30000)
 
 class SetColor {
     constructor(back, font,container,border ,name) {

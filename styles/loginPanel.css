@@ -3,13 +3,15 @@
     --font-color: #E05E1F;
     --containercolor: #3f3f3f;
     --bordercolor: #ffffff;
-    cursor: none !important;
-    user-select: none !important; 
 }
 
 body{
-    cursor: none;
-    user-select: none; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     padding-top: 5px;
     margin: 0;
     height: 100vh;
@@ -36,9 +38,13 @@ body{
     min-width: 200px;
 } */
 .configButton{
-    cursor: none;
-    user-select: none; 
-    width: 32%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight:600;
+    width: 50%;
     height: 100%;
     border-radius: 30px;
     font-size: 10vh;
@@ -51,18 +57,15 @@ body{
     color: #e8eef7;
 }
 input{
-    cursor: none;
-    user-select: none;
     padding: 5px 0 5px 15px;
     height: 80%;
     margin: 0 0.4vw 0 0;
     border-radius: 30px;
-    font-size: 10vh ;
+    font-size: 9vh ;
     width: 32%;
 }
 #bar{
-    cursor: none;
-    user-select: none;
+
     padding: 5px 5px;
     display: flex;
     height: 15vh;
@@ -70,7 +73,6 @@ input{
     background-color: var(--back-color);
 }
 #t9-input {
-    cursor: none;
     user-select: none; 
     height: 100px;
     text-align: center;
@@ -79,8 +81,6 @@ input{
 
 .t9-buttons {
     font-size: 9vh ;
-    cursor: none;
-    user-select: none; 
     height: 80vh;
     width: 100vw;
     padding-left: 10px;
@@ -89,18 +89,22 @@ input{
 }
 
 .t9-button {
-    cursor:none;
-    user-select:none;
-    padding-top: 5px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     height: 18vh;
+    padding-bottom: 8px;
     width: 32.5%;
     background-color: #3f3f3f;
     color: #FFF;
     display: inline-block;
     text-align: center;
-    margin: -2px -2px;
+    margin: -8px -2px 0 -2px ;
 }
-    
+
 
 .t9-button {
     float: left;
@@ -108,7 +112,6 @@ input{
     font-size: 9vh ;
     color: white;
     font-weight: bold;
-    font-family: "Consolas";
 }
 
 .t9-button:active {
