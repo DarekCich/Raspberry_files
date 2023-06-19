@@ -3,21 +3,21 @@
     --font-color: #E05E1F;
     --containercolor: #3f3f3f;
     --bordercolor: #ffffff;
-    cursor: none !important;
-    user-select: none !important; 
 }
 
 body{
-    cursor: none;
-    user-select: none; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     padding-top: 5px;
     margin: 0;
-    height: 330px;
-    width: 480px;
+    height: 100vh;
+    width: 100vw;
     background-color: var(--back-color);
     overflow: hidden;
-    max-width: 500px;
-    max-height: 340px;
     z-index: 1;
 
 }
@@ -38,39 +38,41 @@ body{
     min-width: 200px;
 } */
 .configButton{
-    cursor: none;
-    user-select: none; 
-    width: 30%;
-    height: 94%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight:600;
+    width: 50%;
+    height: 100%;
     border-radius: 30px;
-    font-size: 22px;
+    font-size: 10vh;
 
 }
 #data{
-    margin-left: 10px;
-    margin-bottom: 10px;
+
+    padding: 1vh 2vw;
+    background-color: var(--back-color);
     color: #e8eef7;
 }
 input{
-    cursor: none;
-    user-select: none; 
-    width: 26.5%;
-    height: 50px;
-    margin-bottom: 5px;
+    padding: 5px 0 5px 15px;
+    height: 80%;
+    margin: 0 0.4vw 0 0;
     border-radius: 30px;
-    padding: 5px 10px;
-    font-size: 22px;
-
+    font-size: 9vh ;
+    width: 32%;
 }
 #bar{
-    cursor: none;
-    user-select: none; 
-    height: 70px;
-    margin-left: 10px;
-    width: 480px;
+
+    padding: 5px 5px;
+    display: flex;
+    height: 15vh;
+    width: 98.5vw;
+    background-color: var(--back-color);
 }
 #t9-input {
-    cursor: none;
     user-select: none; 
     height: 100px;
     text-align: center;
@@ -78,38 +80,38 @@ input{
 
 
 .t9-buttons {
-    font-size: 22px;
-    cursor: none;
-    user-select: none; 
-    height: 255px;
-    width: 480px;
+    font-size: 9vh ;
+    height: 80vh;
+    width: 100vw;
     padding-left: 10px;
     padding-bottom: 10px;
     background-color: var(--back-color);
 }
 
 .t9-button {
-    cursor:none;
-    user-select:none;
-    font-size: 22px;
-    padding-top: 5px;
-    height: 55px;
-    width: 32%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    height: 18vh;
+    padding-bottom: 8px;
+    width: 32.5%;
     background-color: #3f3f3f;
     color: #FFF;
     display: inline-block;
     text-align: center;
-    margin: -2px -2px;
+    margin: -8px -2px 0 -2px ;
 }
-    
+
 
 .t9-button {
     float: left;
     border: 2px solid #FFF;
-    font-size: 25px;
+    font-size: 9vh ;
     color: white;
     font-weight: bold;
-    font-family: "Consolas";
 }
 
 .t9-button:active {
@@ -117,9 +119,10 @@ input{
 }
 
 .t9-button-text {
+    margin-top: -2vh;
     color: #d7d7d7;
     display: block;
-    font-size: 20px;
+    font-size: 7vh ;
     text-align: center;
 }
 

@@ -45,7 +45,16 @@ async function log(){
     let ret = false;
     let username = document.getElementById("usernameInput").value;
     let password = document.getElementById("passwordInput").value;
-    axios.defaults.baseURL = 'http://localhost:8080'
+    await fetch('../Config.json')
+        .then(response => response.json())
+        .then(data => {
+            // Tutaj możesz pracować z wczytanymi danymi
+            axios.defaults.baseURL = data.serverIp;
+        })
+        .catch(error => {
+            console.error('Wystąpił błąd podczas wczytywania pliku JSON:', error);
+        });
+    //axios.defaults.baseURL = 'http://localhost:8080'
     //axios.defaults.baseURL = 'http://192.168.0.9:8080'
     await axios.post('api/auth/signin', {
         "username": username,

@@ -18,7 +18,7 @@ let cityName= ""
 let mode    = "";
 let typeOfTransport = ""
 let listOfTrips = [];
-let auto= true;
+let auto= false;
 // on Start
 function onstart(){
     config();
@@ -36,8 +36,7 @@ function config(){
     option  = document.getElementById( "setOption");
     option.style.zIndex         = "-1"
     document.getElementById("typeOfTransport").innerHTML = "Transport Miejski"
-    axios.defaults.baseURL = 'http://localhost:8080'
-    //axios.defaults.baseURL = 'http://192.168.0.9:8080'
+
 }
 async function setLogin(loginData) {
     //console.log(loginData)
@@ -54,12 +53,21 @@ function loadColors(){
     changeColor();
 }
 async function userSignIn(username, password) {
+    await fetch('../Config.json')
+        .then(response => response.json())
+        .then(data => {
+            // Tutaj możesz pracować z wczytanymi danymi
+            axios.defaults.baseURL = data.serverIp;
+        })
+        .catch(error => {
+            console.error('Wystąpił błąd podczas wczytywania pliku JSON:', error);
+        });
     await axios.post('api/auth/signin', {
         "username": username,
         "password": password,
     }).then(response => {
         axios.defaults.headers.common['Authorization'] = response.headers.authorization;
-
+        onstart();
     }).catch(() => {
     });
 }
@@ -237,9 +245,11 @@ async function getZtmInfo(url,number){
 async function getPkpInfo(number){
 
     document.getElementById("loading").style.zIndex="2"
+    //console.log(`api/pkp/stops/${number}`)
     await axios.get(`api/pkp/stops/${number}`).then(response => {
         try {
             if(response.data.departures !== undefined)
+                //console.log(response)
                 loadData(response.data.departures);
         } catch (e) {
         }
@@ -370,13 +380,21 @@ function SetStationNames(name){
 function estimatedTime(){
     let temp = false
    if(listOfTrips.length<5){
-       getZtmInfo(cityName, numberOfStation).then(() => {});
-       return;
+       if (typeOfTransport === "trains") {
+           getPkpInfo(numberOfStation).then(() => {
+           });
+       } else {
+           getZtmInfo(cityName, numberOfStation).then(() => {
+           });
+       }
    }
    let date  =  new Date()
    while (true){
        let part = listOfTrips[0].estimatedTime.split(":")
-       if(part[1]>=date.getMinutes()){
+       if(parseInt(part[0])> date.getHours()){
+           break;
+       }
+       if(parseInt(part[1])>date.getMinutes()){
            break;
        }
        listOfTrips.splice(0,1)
@@ -403,12 +421,12 @@ function onDownTime(){
 function onUpTime(){
     timeUp =  Date.now() - timeDown;
     if(timeUp >= 2000 && timeUp<=5000) auto=true
-    else if (timeUp>5000) window.location.href = "../pages/loginPanel.html";
+    else if (timeUp>5000) window.location.href = "../pages/adminPanel.html";
     else timeClick();
 }
 
 function timeClick() {
-    document.getElementById("configPanel").style.zIndex==="5" ? document.getElementById("configPanel").style.zIndex="-1" :  document.getElementById("configPanel").style.zIndex="5";
+    document.getElementById("backConfigPanel").style.zIndex==="5" ? document.getElementById("backConfigPanel").style.zIndex="-1" :  document.getElementById("backConfigPanel").style.zIndex="5";
 }
 async function autoConfig(){
     if(auto){

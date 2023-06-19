@@ -1,0 +1,63 @@
+:root{
+
+}
+body{
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100vh;
+}
+.Bar .info {
+    width: 92vw;
+}
+.alarmBar{
+    justify-content: center !important;
+    height: 18vh;
+    margin: 1vh;
+}
+.timeContainer{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.timeSetter{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 12vh;
+    width: 14vh;
+    background-color: #535353;
+    border: none;
+    border-radius: 1vh;
+    margin: 0 2vw ;
+}
+span{
+    height: 3vh;
+}
+.back{
+    margin: 1vh 1vw;
+    height: 80%;
+    width: 50%;
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    justify-content: center;
+    align-self: center;
+    display: flex;
+    font-size: 7vh;
+}
+.ActiveButton{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 18vh;
+    height: 18vh;
+    border-radius: 1vh;
+    font-size: 12vh;
+    display: flex;
+    justify-content: center;
+}

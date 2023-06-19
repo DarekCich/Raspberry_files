@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="../styles/adminPanel.css">
+
+</head>
+<body>
+    <div class="admin border" onclick="home() " > Ekran Główny         </div>
+    <div class="admin border" onclick="wifi() " > Wybór Sieci Wifi     </div>
+    <div class="admin border" onclick="alarm()" > Ustawienia Budzika   </div>
+    <div class="admin border" onclick="user() " > Zmiana Użytkownika   </div>
+</body>
+<script>
+    function home(){
+        window.location.href = "../pages/index.html"
+    }
+    function wifi(){
+        window.location.href = "../pages/internetPanel.html"
+    }
+    function alarm(){
+        window.location.href = "../pages/alarmPanel.html"
+    }
+    function user(){
+        window.location.href = "../pages/loginPanel.html"
+    }
+
+</script>
+</html>
